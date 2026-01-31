@@ -32,8 +32,9 @@ export default function AppHeader() {
       </div>
 
       <nav className="flex items-center gap-2">
-        <NavLink to="/">Dashboard</NavLink>
-      </nav>
+      <NavLink to="/">Dashboard</NavLink>
+      <NavLink to="/subscriptions">Recurring</NavLink>
+    </nav>
     </header>
   );
 }

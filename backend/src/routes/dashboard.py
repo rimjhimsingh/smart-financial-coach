@@ -6,6 +6,8 @@ from ..services.analytics_service import (
     get_category_breakdown,
     get_monthly_deltas,
 )
+from ..services.analytics_service import get_anomalies
+
 dashboard_bp = Blueprint("dashboard", __name__)
 
 @dashboard_bp.get("/dashboard/summary")
@@ -14,7 +16,9 @@ def dashboard_summary():
 
 @dashboard_bp.get("/dashboard/charts")
 def dashboard_charts():
-    return jsonify({"charts": get_dashboard_charts()}), 200
+    month = request.args.get("month")
+    return jsonify({"charts": get_dashboard_charts(month=month)}), 200
+
 @dashboard_bp.get("/dashboard/category-breakdown")
 def category_breakdown():
     month = request.args.get("month")
@@ -49,3 +53,9 @@ def monthly_deltas():
         return jsonify(data), 200
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
+
+@dashboard_bp.get("/dashboard/anomalies")
+def anomalies():
+    days = request.args.get("days", default=30, type=int)
+    limit = request.args.get("limit", default=10, type=int)
+    return jsonify(get_anomalies(days=days, limit=limit)), 200

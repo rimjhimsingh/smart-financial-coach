@@ -1,4 +1,6 @@
 import pandas as pd
+from typing import Optional
+
 from .store import STORE
 
 
@@ -74,22 +76,26 @@ def get_dashboard_summary() -> dict:
         "anomalies_count_30d": anomalies_count_30d,
         "biggest_spend_driver": biggest,
     }
-def get_dashboard_charts() -> dict:
+def get_dashboard_charts(month: Optional[str] = None) -> dict:
     df = STORE.transactions
     if df.empty:
         return {
             "spend_by_category_month": [],
             "in_vs_out_month": [],
             "daily_spend_trend": [],
+            "month": None,
+            "available_months": [],
         }
 
     dff = df.copy()
     dff["month"] = pd.to_datetime(dff["posted_date"]).dt.to_period("M").astype(str)
 
-    # Chart 1: Spend by category for latest month (expenses only)
-    latest_month = sorted(dff["month"].unique())[-1]
+    months = sorted(dff["month"].unique())
+    resolved_month = _resolve_month(df, month)
+
+    # Spend by category for selected month (expenses only)
     spend_cat = (
-        dff[(dff["month"] == latest_month) & (dff["amount"] < 0)]
+        dff[(dff["month"] == resolved_month) & (dff["amount"] < 0)]
         .groupby("category")["amount"]
         .sum()
         .abs()
@@ -97,10 +103,9 @@ def get_dashboard_charts() -> dict:
     )
     spend_by_category_month = [{"category": k, "value": float(v)} for k, v in spend_cat.items()]
 
-    # Chart 2: Money in vs money out by month (+net)
+    # Money in vs money out by month (+net) across all months
     income = dff[dff["amount"] > 0].groupby("month")["amount"].sum()
     out = dff[dff["amount"] < 0].groupby("month")["amount"].sum().abs()
-    months = sorted(dff["month"].unique())
 
     in_vs_out_month = []
     for m in months:
@@ -110,22 +115,20 @@ def get_dashboard_charts() -> dict:
             {"month": m, "money_in": round(inc, 2), "money_out": round(exp, 2), "net": round(inc - exp, 2)}
         )
 
-    # Chart 3: Daily spend trend (expenses only)
-    dff["day"] = pd.to_datetime(dff["posted_date"]).dt.date
-    daily = (
-        dff[dff["amount"] < 0]
-        .groupby("day")["amount"]
-        .sum()
-        .abs()
-        .sort_index()
-    )
+    # Daily spend trend for selected month, show last 14 days within that month if possible
+    dff_month = dff[(dff["month"] == resolved_month) & (dff["amount"] < 0)].copy()
+    dff_month["day"] = pd.to_datetime(dff_month["posted_date"]).dt.date
+    daily = dff_month.groupby("day")["amount"].sum().abs().sort_index()
     daily_spend_trend = [{"day": str(k), "spend": float(v)} for k, v in daily.items()]
 
     return {
+        "month": resolved_month,
+        "available_months": months,
         "spend_by_category_month": spend_by_category_month,
         "in_vs_out_month": in_vs_out_month,
         "daily_spend_trend": daily_spend_trend,
     }
+
 from typing import Optional
 
 
@@ -291,3 +294,25 @@ def get_monthly_deltas(
         "previous_month": prev_month,
         "top_category_increases": results,
     }
+
+def get_anomalies(days: int = 30, limit: int = 10) -> dict:
+    df = STORE.transactions
+    if df.empty:
+        return {"days": days, "anomalies": []}
+
+    today = _today_from_data(df)
+    start = today - pd.Timedelta(days=days)
+    dff = df[df["posted_date"] >= start].copy()
+
+    # Demo rule: large absolute amounts
+    dff["abs_amount"] = dff["amount"].abs()
+    flagged = dff[dff["abs_amount"] > 500].sort_values("abs_amount", ascending=False)
+
+    rows = flagged.drop(columns=["abs_amount"]).head(limit).to_dict(orient="records")
+    out = _serialize_transactions(rows)
+
+    # Attach a reason for UI
+    for r in out:
+        r["reason"] = "Large transaction (demo threshold > 500)"
+
+    return {"days": days, "anomalies": out}

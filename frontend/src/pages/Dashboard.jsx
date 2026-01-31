@@ -39,28 +39,90 @@ export default function Dashboard() {
   const [seedInfo, setSeedInfo] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [availableMonths, setAvailableMonths] = useState([]);
+  const [monthlyDeltaData, setMonthlyDeltaData] = useState(null);
+  const [categoryBreakdown, setCategoryBreakdown] = useState(null);
+  const [anomalies, setAnomalies] = useState(null);
 
-  async function refreshAll() {
+  const [loadingInsights, setLoadingInsights] = useState(false);
+  const [loadingDrilldown, setLoadingDrilldown] = useState(false);
+  const [loadingAnomalies, setLoadingAnomalies] = useState(false);
+
+  async function refreshAll(monthOverride) {
     setError(null);
-
+  
     const h = await dashboardApi.health();
     setHealth(h);
-
+  
     const s = await dashboardApi.stats();
     setStats(s);
-
+  
     if (s?.total_rows > 0) {
       const summaryRes = await dashboardApi.summary();
       setKpis(summaryRes?.kpis || null);
-
-      const chartRes = await dashboardApi.charts();
-      setCharts(chartRes?.charts || null);
+  
+      const chartRes = await dashboardApi.charts(monthOverride || selectedMonth);
+      const c = chartRes?.charts || null;
+      setCharts(c);
+  
+      const months = c?.available_months || (c?.in_vs_out_month || []).map((x) => x.month);
+      setAvailableMonths(months);
+  
+      const resolved = c?.month || (months.length ? months[months.length - 1] : null);
+      if (!selectedMonth && resolved) setSelectedMonth(resolved);
+  
+      await refreshInsights(resolved);
     } else {
       setKpis(null);
       setCharts(null);
+      setAvailableMonths([]);
+      setSelectedMonth(null);
+      setMonthlyDeltaData(null);
+      setCategoryBreakdown(null);
+      setAnomalies(null);
     }
   }
 
+  async function refreshInsights(month) {
+    if (!month) return;
+  
+    setLoadingInsights(true);
+    setLoadingAnomalies(true);
+  
+    try {
+      const deltas = await dashboardApi.monthlyDeltas(month, 3, 5);
+      setMonthlyDeltaData(deltas || null);
+    } catch (e) {
+      setMonthlyDeltaData(null);
+    } finally {
+      setLoadingInsights(false);
+    }
+  
+    try {
+      const a = await dashboardApi.anomalies(30, 5);
+      setAnomalies(a || null);
+    } catch (e) {
+      setAnomalies(null);
+    } finally {
+      setLoadingAnomalies(false);
+    }
+  }
+  
+  async function loadCategoryBreakdown(month, category) {
+    if (!category) return;
+    setLoadingDrilldown(true);
+    try {
+      const data = await dashboardApi.categoryBreakdown(month, category, 10, 10);
+      setCategoryBreakdown(data || null);
+    } catch (e) {
+      setCategoryBreakdown(null);
+    } finally {
+      setLoadingDrilldown(false);
+    }
+  }
+
+  
   async function handleSeed() {
     setLoadingSeed(true);
     setError(null);
@@ -127,6 +189,30 @@ export default function Dashboard() {
         >
           {loadingSeed ? "Loading..." : "Load Demo Data"}
         </button>
+        <div className="flex items-center gap-3">
+  {availableMonths?.length ? (
+    <select
+      value={selectedMonth || ""}
+      onChange={async (e) => {
+        const m = e.target.value;
+        setSelectedMonth(m);
+        setSelectedCategory(null);
+        setCategoryBreakdown(null);
+        await refreshAll(m);
+      }}
+      className="rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-200"
+    >
+      {availableMonths.map((m) => (
+        <option key={m} value={m}>{m}</option>
+      ))}
+    </select>
+  ) : null}
+
+  <button >Load Demo Data</button>
+</div>
+
+
+        
       </div>
 
       {error ? (
@@ -169,25 +255,82 @@ export default function Dashboard() {
             </div>
           </SectionShell>
 
-          <SectionShell title="Narrative insight">
-            <div className="text-sm text-slate-300">
-              {kpis ? (
-                <div className="space-y-2">
-                  <div className="text-slate-400">Biggest driver this month</div>
-                  <div className="text-lg font-extrabold">{kpis.biggest_spend_driver?.category || "N/A"}</div>
-                  <div className="text-slate-300">
-                    Change vs last month:{" "}
-                    <span className="font-bold">{fmtMoney(kpis.biggest_spend_driver?.delta || 0)}</span>
+          <SectionShell title="Executive insight">
+  {!kpis ? (
+    <div className="text-slate-400">Load demo data to generate insights.</div>
+  ) : loadingInsights ? (
+    <div className="text-sm text-slate-400">Loading insights...</div>
+  ) : (
+    <div className="space-y-4 text-sm text-slate-200">
+      <div>
+        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">What changed this month</div>
+        <div className="mt-2 space-y-3">
+          {(monthlyDeltaData?.top_category_increases || []).map((c) => (
+            <div key={c.category} className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+              <div className="flex items-center justify-between">
+                <div className="font-bold">{c.category}</div>
+                <div className="text-slate-300">{fmtMoney(c.delta)}</div>
+              </div>
+              <div className="mt-2 text-xs text-slate-400">Top drivers</div>
+              <div className="mt-1 space-y-1">
+                {(c.top_merchants || []).slice(0, 3).map((m) => (
+                  <div key={m.merchant} className="flex items-center justify-between text-xs">
+                    <span className="text-slate-300">{m.merchant}</span>
+                    <span className="text-slate-200">{fmtMoney(m.delta)}</span>
                   </div>
-                  <div className="mt-2 text-xs text-slate-400">
-                    Next: click into category drilldowns and show top merchants.
-                  </div>
-                </div>
-              ) : (
-                <div className="text-slate-400">Load demo data to generate insights.</div>
-              )}
+                ))}
+              </div>
+              <button
+                onClick={() => {
+                  setSelectedCategory(c.category);
+                  loadCategoryBreakdown(selectedMonth, c.category);
+                }}
+                className="mt-2 text-xs font-semibold text-blue-300 hover:text-blue-200"
+              >
+                View transactions
+              </button>
             </div>
-          </SectionShell>
+          ))}
+          {!monthlyDeltaData?.top_category_increases?.length ? (
+            <div className="text-xs text-slate-400">Not enough history for month over month comparisons.</div>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Biggest spend driver</div>
+        <div className="mt-1 text-base font-extrabold">{kpis.biggest_spend_driver?.category || "N/A"}</div>
+        <div className="mt-1 text-xs text-slate-300">
+          Change vs last month: <span className="font-bold">{fmtMoney(kpis.biggest_spend_driver?.delta || 0)}</span>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Anomalies (last 30 days)</div>
+        {loadingAnomalies ? (
+          <div className="mt-2 text-xs text-slate-400">Loading...</div>
+        ) : (
+          <div className="mt-2 space-y-2">
+            {(anomalies?.anomalies || []).slice(0, 5).map((a) => (
+              <div key={a.transaction_id} className="flex items-start justify-between gap-3 text-xs">
+                <div>
+                  <div className="font-semibold text-slate-200">{a.merchant}</div>
+                  <div className="text-slate-400">{a.posted_date}  {a.category}</div>
+                  <div className="text-slate-500">{a.reason}</div>
+                </div>
+                <div className="font-bold text-slate-100">{fmtMoney(a.amount)}</div>
+              </div>
+            ))}
+            {!anomalies?.anomalies?.length ? (
+              <div className="text-xs text-slate-400">No anomalies flagged by the demo rule.</div>
+            ) : null}
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</SectionShell>
+
         </div>
 
         <div className="space-y-6 lg:col-span-2">
@@ -225,6 +368,7 @@ export default function Dashboard() {
                 data={spendByCategory}
                 onSelectCategory={(category) => {
                   setSelectedCategory(category);
+                  loadCategoryBreakdown(selectedMonth, category);
                 }}
               />
 
@@ -233,6 +377,65 @@ export default function Dashboard() {
                   Selected category: <span className="font-semibold text-white">{selectedCategory}</span>
                 </div>
               ) : null}
+
+{selectedCategory ? (
+  <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-950/30 p-4">
+    <div className="flex items-center justify-between">
+      <div className="text-sm font-bold text-slate-100">Drilldown: {selectedCategory}</div>
+      <button
+        onClick={() => {
+          setSelectedCategory(null);
+          setCategoryBreakdown(null);
+        }}
+        className="text-xs font-semibold text-slate-300 hover:text-white"
+      >
+        Clear
+      </button>
+    </div>
+
+    {loadingDrilldown ? (
+      <div className="mt-3 text-xs text-slate-400">Loading breakdown...</div>
+    ) : !categoryBreakdown ? (
+      <div className="mt-3 text-xs text-slate-400">Select a category to see top merchants and transactions.</div>
+    ) : (
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top merchants</div>
+          <div className="mt-2 space-y-2">
+            {(categoryBreakdown.top_merchants || []).map((m) => (
+              <div key={m.merchant} className="flex items-center justify-between text-xs">
+                <span className="text-slate-200">{m.merchant}</span>
+                <span className="font-bold text-slate-100">{fmtMoney(m.total_spend)}</span>
+              </div>
+            ))}
+            {!categoryBreakdown.top_merchants?.length ? (
+              <div className="text-xs text-slate-400">No spend found for this category in {categoryBreakdown.month}.</div>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top transactions</div>
+          <div className="mt-2 space-y-2">
+            {(categoryBreakdown.top_transactions || []).map((t) => (
+              <div key={t.transaction_id} className="flex items-start justify-between gap-3 text-xs">
+                <div>
+                  <div className="font-semibold text-slate-200">{t.merchant}</div>
+                  <div className="text-slate-400">{t.posted_date}  {t.account_id}</div>
+                </div>
+                <div className="font-bold text-slate-100">{fmtMoney(t.amount)}</div>
+              </div>
+            ))}
+            {!categoryBreakdown.top_transactions?.length ? (
+              <div className="text-xs text-slate-400">No transactions found.</div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+) : null}
+
               </div>
             </div>
 

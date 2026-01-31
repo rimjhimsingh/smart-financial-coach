@@ -23,4 +23,23 @@ export const dashboardApi = {
     qs.set("merchantsPerCategory", String(merchantsPerCategory));
     return api.get(`/api/dashboard/insights/monthly-deltas?${qs.toString()}`);
   },
+  charts: (month) => {
+    const qs = new URLSearchParams();
+    if (month) qs.set("month", month);
+    const suffix = qs.toString() ? `?${qs.toString()}` : "";
+    return api.get(`/api/dashboard/charts${suffix}`);
+  },
+  
+  anomalies: (days = 30, limit = 10) => {
+    const qs = new URLSearchParams();
+    qs.set("days", String(days));
+    qs.set("limit", String(limit));
+    return api.get(`/api/dashboard/anomalies?${qs.toString()}`);
+  },
+  subscriptions: (minOccurrences = 2) => {
+    const qs = new URLSearchParams();
+    qs.set("min_occurrences", String(minOccurrences));
+    return api.get(`/api/subscriptions?${qs.toString()}`);
+  },
+  
 };

@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./components/AppLayout";
 import Error from "./components/Error";
 import Dashboard from "./pages/Dashboard";
+import Subscriptions from "./pages/Subscriptions";
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { index: true, element: <Dashboard /> },
+      { path: "subscriptions", element: <Subscriptions /> },
     ],
   },
 ]);
