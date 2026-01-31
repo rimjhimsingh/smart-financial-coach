@@ -1,0 +1,47 @@
+transaction_id,posted_date,merchant,amount,currency,category,account_id
+350e30e4-8fd3-4eb2-b264-7799c351c28b,2025-11-03,Equinox Gym,-120.0,USD,Subscriptions,amex
+1f61440a-8a1f-490b-a88f-3ebff7a03f5a,2025-11-06,Starbucks,-5.45,USD,Coffee,amex
+3de687c1-f1ef-4abd-9155-c43b93d010d1,2025-11-08,Dropbox,-9.99,USD,Subscriptions,amex
+26051188-cadd-48ba-a04f-f7ea1ab85946,2025-11-10,Spotify,-10.99,USD,Subscriptions,amex
+22fe4390-8a63-4256-b7fd-948b2639c595,2025-11-12,Chipotle,-14.25,USD,Dining,amex
+2947b86b-8998-4b7b-b993-61e10c98e992,2025-11-15,Netflix,-15.99,USD,Subscriptions,amex
+9a0140f0-27ed-45fa-8b4f-ac4370970ccb,2025-11-17,Uber,-18.2,USD,Transportation,amex
+729f7ef7-df02-46b5-a8ab-e91130d0f560,2025-11-19,Starbucks,-6.1,USD,Coffee,amex
+de520033-7a8f-4ac7-a4fe-5038f2cb82be,2025-11-20,Apple iCloud,-0.99,USD,Subscriptions,amex
+cec3c783-b149-47b2-ba87-09da8c0b1504,2025-11-22,Whole Foods,-68.4,USD,Groceries,amex
+1fc0b561-2587-414d-8fc3-b5e90ad13469,2025-11-27,Starbucks,-5.95,USD,Coffee,amex
+38933263-d869-4e6c-8dfd-410bb181bcf9,2025-12-01,Hulu,0.0,USD,Subscriptions,amex
+4106b5cd-1f21-4daf-8522-272ecabb0650,2025-12-03,Equinox Gym,-120.0,USD,Subscriptions,amex
+78491f89-3ce0-4c8a-bb54-9db4df6aa602,2025-12-04,Starbucks,-5.65,USD,Coffee,amex
+f2fb844d-c693-4889-bcb9-bd8015e47234,2025-12-08,Dropbox,-9.99,USD,Subscriptions,amex
+aabd20ec-421c-452a-9d05-5683e8a92536,2025-12-09,Sweetgreen,-17.8,USD,Dining,amex
+cdcf5af9-32cd-42d7-86b5-678c38d5f905,2025-12-10,Spotify,-10.99,USD,Subscriptions,amex
+8cc9e2eb-a823-4999-a7d3-bb545338e860,2025-12-11,Uber,-22.4,USD,Transportation,amex
+8afe67ad-3a93-422d-938e-1de9c805d3fa,2025-12-15,Netflix,-15.99,USD,Subscriptions,amex
+b7b80fff-f4cf-47eb-a238-368e63f7ed5e,2025-12-18,Starbucks,-6.25,USD,Coffee,amex
+08f5a084-3b76-42cd-8c5d-fcafd75c2699,2025-12-20,Apple iCloud,-0.99,USD,Subscriptions,amex
+d51e1ad5-7446-43f1-871b-09c72edff197,2025-12-21,Trader Joe's,-54.6,USD,Groceries,amex
+f29bbbcb-b8de-431e-a4f3-5963e3be354e,2025-12-28,Delta Air Lines,-850.0,USD,Travel,amex
+62f989a2-1a64-4081-932e-751c433b0014,2025-12-29,Starbucks,-5.8,USD,Coffee,amex
+b3c5c388-4b32-488d-b971-d6a69986b744,2026-01-01,Hulu,-15.99,USD,Subscriptions,amex
+8e1ec414-30ae-4b5f-88c3-68271a429de8,2026-01-02,Starbucks,-6.45,USD,Coffee,amex
+09b00944-c8b9-4980-be99-4b8c33adbe22,2026-01-03,Equinox Gym,-120.0,USD,Subscriptions,amex
+648a6644-d4c5-49e9-b1fc-4f7a0436f27c,2026-01-05,Starbucks,-5.75,USD,Coffee,amex
+ea00daf3-281f-46c4-b455-9a5d90909c5c,2026-01-06,Chipotle,-15.1,USD,Dining,amex
+8dcfe415-f625-4172-a239-469cfa64e868,2026-01-07,Starbucks,-6.1,USD,Coffee,amex
+cecf2430-0604-4659-b38a-080cb700de97,2026-01-08,Dropbox,-11.99,USD,Subscriptions,amex
+2954cb2b-69b1-4ff3-9856-8ef4bc64a9bc,2026-01-09,Starbucks,-5.9,USD,Coffee,amex
+1d8c0f3a-f768-4712-b8d3-d3aeb36279ab,2026-01-10,Spotify,-10.99,USD,Subscriptions,amex
+9f15ae54-68b7-4da4-9830-c8f69963b454,2026-01-11,Uber,-35.6,USD,Transportation,amex
+76c072eb-5e8e-4085-bbcf-e423b9c5f4eb,2026-01-12,Starbucks,-6.55,USD,Coffee,amex
+7aa74b1a-1370-42e0-8ff2-e0a371e7754a,2026-01-13,Thai House,-42.75,USD,Dining,amex
+0d28c825-a2ac-42b1-bcff-9516809a0888,2026-01-14,Starbucks,-5.6,USD,Coffee,amex
+b8d6fd94-6ab3-4f1f-9d75-2e1ff9b70523,2026-01-15,Netflix,-15.99,USD,Subscriptions,amex
+fe7f7317-b9db-4b8d-ae62-2abf174daf22,2026-01-16,Starbucks,-6.35,USD,Coffee,amex
+fd1826e1-efed-48d8-8bd9-049cd17db732,2026-01-19,Whole Foods,-92.15,USD,Groceries,amex
+61071ca8-f79c-4065-a187-18d51ba40cbd,2026-01-20,Apple iCloud,-0.99,USD,Subscriptions,amex
+dacc7666-0aa5-4168-87fa-7fe0ee29bfca,2026-01-21,Starbucks,-6.8,USD,Coffee,amex
+16063269-0925-4aa1-a130-4b3c948e3d78,2026-01-22,Best Buy,-1299.0,USD,Shopping,amex
+de8817fe-34ad-4307-b8e9-8f18a4fe679f,2026-01-24,Starbucks,-5.95,USD,Coffee,amex
+1d703d63-c20c-48fe-8583-9396964067b1,2026-01-26,Uber,-28.9,USD,Transportation,amex
+89250e48-354f-4ad4-994e-33b328081494,2026-01-28,Starbucks,-6.25,USD,Coffee,amex

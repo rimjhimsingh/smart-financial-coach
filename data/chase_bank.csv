@@ -1,0 +1,26 @@
+transaction_id,posted_date,merchant,amount,currency,category,account_id
+df9566c9-2be3-4daa-9c18-fc3b3042e2dd,2025-11-04,CVS Pharmacy,-24.1,USD,Healthcare,chase
+da0598c7-de4a-4f29-9eda-0963fe9579a7,2025-11-06,The New York Times,-4.0,USD,Subscriptions,chase
+3306dd42-5824-49c8-8b70-7ffb9a8fd070,2025-11-11,Canva,-12.99,USD,Subscriptions,chase
+7b819c3c-0b90-479b-af5e-355b444b2be8,2025-11-13,Dunkin,-4.95,USD,Coffee,chase
+6b5675b4-09a2-4aa8-b2dc-8cc2c3343257,2025-11-20,Freelance Deposit,900.0,USD,Income,chase
+8ba96f4a-49da-44aa-96eb-31e51080935c,2025-11-24,Local Restaurant,-38.6,USD,Dining,chase
+10a9a181-c94d-4b6c-b2b4-0ae9c1fecc08,2025-11-25,Headspace,0.0,USD,Subscriptions,chase
+cafd86a5-f019-48d2-a05c-1bb6e5451786,2025-12-02,Dunkin,-5.25,USD,Coffee,chase
+ecc27bc1-445a-4bb5-b80c-7716da4c4932,2025-12-06,The New York Times,-4.0,USD,Subscriptions,chase
+35c97fbf-8dd6-4172-a392-3a4c7e116895,2025-12-11,Canva,-12.99,USD,Subscriptions,chase
+41832ced-0060-4ad7-aff7-afe19fb4bf21,2025-12-16,Target,-64.8,USD,Shopping,chase
+4b9bb435-a0e6-4dfa-8a0f-ee77fd51334a,2025-12-18,Freelance Deposit,600.0,USD,Income,chase
+bba43ee6-1f90-46a4-9feb-06cbf972e037,2025-12-23,Local Restaurant,-52.3,USD,Dining,chase
+4f9527de-15b6-4630-a34d-09fe24324da4,2025-12-25,Headspace,-12.99,USD,Subscriptions,chase
+d42688f4-81e8-4b6d-a3f0-0137a0b10e50,2025-12-30,Transfer to SoFi,-500.0,USD,Transfer,chase
+0d93a6a9-614b-4e3b-8a52-662e5dfa5c70,2026-01-02,Transfer from SoFi,500.0,USD,Transfer,chase
+787f74a0-09c3-4671-a048-189c5236022f,2026-01-04,Dunkin,-6.15,USD,Coffee,chase
+eb60c2d3-381b-46a9-a681-bcccfedaf805,2026-01-06,The New York Times,-4.0,USD,Subscriptions,chase
+931530b0-e104-4fe7-9630-ee684586a392,2026-01-08,Dunkin,-5.85,USD,Coffee,chase
+ce7404e6-c3b2-497b-a0ef-c26d3fb3adc3,2026-01-11,Canva,-12.99,USD,Subscriptions,chase
+6229c148-366d-4153-9843-63dc59d9431f,2026-01-12,Target,-112.4,USD,Shopping,chase
+ef9e4713-7043-4ced-b665-5a0f3b358bca,2026-01-19,Airbnb,-720.0,USD,Travel,chase
+48671be3-570c-44f0-a5eb-5062542cdb81,2026-01-20,Local Restaurant,-61.75,USD,Dining,chase
+38aa0fee-145e-4c8c-b7b9-cade8bcfa7b5,2026-01-25,Headspace,-12.99,USD,Subscriptions,chase
+98d7a8d5-b5c5-4fd0-8c61-c1a203b098ff,2026-01-27,Freelance Deposit,1200.0,USD,Income,chase
