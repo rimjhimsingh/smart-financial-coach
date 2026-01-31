@@ -1,6 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import AppHeader from "./AppHeader";
+import CopilotWidget from "./CopilotWidget";
+
 
 export default function AppLayout() {
   return (
@@ -10,6 +12,8 @@ export default function AppLayout() {
         <main className="mt-6">
           <Outlet />
         </main>
+        <CopilotWidget />
+
       </div>
     </div>
   );
