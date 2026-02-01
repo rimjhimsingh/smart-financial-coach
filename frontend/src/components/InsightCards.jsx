@@ -1,3 +1,4 @@
+// frontend/src/components/InsightCards.jsx
 import { useEffect, useState } from "react";
 import { dashboardApi } from "../api/dashboardApi";
 
@@ -22,6 +23,7 @@ export default function InsightCards({ month, onDrilldown }) {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorText, setErrorText] = useState("");
+  const [aiStatus, setAiStatus] = useState(""); // "ok" | "rate_limited" | ""
 
   useEffect(() => {
     let mounted = true;
@@ -29,12 +31,21 @@ export default function InsightCards({ month, onDrilldown }) {
     async function load() {
       setLoading(true);
       setErrorText("");
+      setAiStatus("");
+
       try {
         const res = await dashboardApi.copilotInsights(month);
         const payload = res?.data ?? res;
+
         const nextCards = Array.isArray(payload?.cards) ? payload.cards : [];
+        const meta = payload?.meta || {};
+
         if (!mounted) return;
+
         setCards(nextCards.slice(0, 5));
+
+        if (meta.ai_status) setAiStatus(meta.ai_status);
+        if (meta.message) setErrorText(meta.message);
       } catch (e) {
         if (!mounted) return;
         setCards([]);
@@ -53,9 +64,16 @@ export default function InsightCards({ month, onDrilldown }) {
 
   return (
     <div className="bg-transparent p-0">
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-between">
+        <div className="text-sm font-extrabold text-white">AI insights</div>
         {loading ? <div className="text-xs text-slate-500">Generating...</div> : null}
       </div>
+
+      {aiStatus === "rate_limited" ? (
+        <div className="mt-2 rounded-xl border border-amber-900/50 bg-amber-950/30 p-3 text-xs text-amber-200">
+          AI insights temporarily unavailable due to Gemini quota. Showing cached or empty results.
+        </div>
+      ) : null}
 
       {errorText ? <div className="mt-2 text-xs text-red-300">{errorText}</div> : null}
 
