@@ -5,7 +5,6 @@ export const dashboardApi = {
   seed: () => api.post("/api/seed"),
   stats: () => api.get("/api/stats"),
   summary: () => api.get("/api/dashboard/summary"),
-  charts: () => api.get("/api/dashboard/charts"),
 
   categoryBreakdown: (month, category, merchantLimit = 10, txLimit = 10) => {
     const qs = new URLSearchParams();
@@ -41,5 +40,18 @@ export const dashboardApi = {
     qs.set("min_occurrences", String(minOccurrences));
     return api.get(`/api/subscriptions?${qs.toString()}`);
   },
+  copilotInsights: (month) => {
+    const qs = new URLSearchParams();
+    if (month) qs.set("month", month);
+    const suffix = qs.toString() ? `?${qs.toString()}` : "";
+    return api.get(`/api/copilot/insights${suffix}`);
+  },
+
+  copilotChat: (message, month, maxRows = 300) => {
+    const body = { message, max_rows: maxRows };
+    if (month) body.month = month;
+    return api.post("/api/copilot/chat", body);
+  },
+
   
 };

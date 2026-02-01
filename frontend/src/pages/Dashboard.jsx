@@ -4,6 +4,10 @@ import { fmtMoney, fmtNumber } from "../utils/format";
 import SpendByCategoryChart from "../components/charts/SpendByCategoryChart";
 import MoneyInOutChart from "../components/charts/MoneyInOutChart";
 import DailySpendTrendChart from "../components/charts/DailySpendTrendChart";
+import { dashboardApi } from "../api/dashboardApi";
+import InsightCards from "../components/InsightCards";
+import { useNavigate } from "react-router-dom";
+
 
 
 function Card({ title, value, subtext }) {
@@ -48,6 +52,8 @@ export default function Dashboard() {
   const [loadingInsights, setLoadingInsights] = useState(false);
   const [loadingDrilldown, setLoadingDrilldown] = useState(false);
   const [loadingAnomalies, setLoadingAnomalies] = useState(false);
+  const navigate = useNavigate();
+
 
   async function refreshAll(monthOverride) {
     setError(null);
@@ -165,7 +171,6 @@ export default function Dashboard() {
   const inVsOut = charts?.in_vs_out_month || [];
   const dailyTrend = charts?.daily_spend_trend || [];
 
-  const chartsData = charts?.charts ?? charts;
 
 
   return (
@@ -208,7 +213,7 @@ export default function Dashboard() {
     </select>
   ) : null}
 
-  <button >Load Demo Data</button>
+  
 </div>
 
 
@@ -352,7 +357,25 @@ export default function Dashboard() {
               <div className="text-sm text-slate-400">No KPI data yet. Click Load Demo Data.</div>
             )}
           </SectionShell>
+            <SectionShell title="AI insights">
+              <InsightCards
+                month={selectedMonth}
+                onDrilldown={(dd) => {
+                  if (!dd) return;
+
+                  if (dd.type === "category") {
+                    setSelectedCategory(dd.value);
+                    loadCategoryBreakdown(selectedMonth, dd.value);
+                  }
+
+                  if (dd.type === "subscriptions") {
+                    navigate("/subscriptions");
+                  }
+                }}
+              />
+            </SectionShell>
         </div>
+        
       </div>
 
       <SectionShell title="Trends (from analytics engine)">
