@@ -31,14 +31,38 @@ def _cache_set(key: str, data: dict):
 
 def _safe_json(text: str):
     text = (text or "").strip()
+
+    # handle accidental markdown fences
+    if text.startswith("```"):
+        text = text.strip("`").strip()
+        if text.lower().startswith("json"):
+            text = text[4:].strip()
+
+    # 1) Try normal parse first
     try:
         return json.loads(text)
-    except json.JSONDecodeError:
-        start = text.find("{")
-        end = text.rfind("}")
-        if start != -1 and end != -1 and end > start:
-            return json.loads(text[start : end + 1])
-        raise
+    except Exception:
+        pass
+
+    # 2) Parse first JSON value and ignore trailing junk
+    try:
+        decoder = json.JSONDecoder()
+        obj, _idx = decoder.raw_decode(text)
+        return obj
+    except Exception:
+        pass
+
+    # 3) Fallback: grab the first object boundaries and parse
+    start = text.find("{")
+    end = text.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        snippet = text[start : end + 1]
+        decoder = json.JSONDecoder()
+        obj, _idx = decoder.raw_decode(snippet)
+        return obj
+
+    raise json.JSONDecodeError("Could not parse JSON", text, 0)
+
 
 @copilot_bp.post("/copilot/chat")
 def copilot_chat():

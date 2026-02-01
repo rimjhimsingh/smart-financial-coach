@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { dashboardApi } from "../api/dashboardApi";
 import { fmtMoney, fmtNumber } from "../utils/format";
 import SpendByCategoryChart from "../components/charts/SpendByCategoryChart";
 import MoneyInOutChart from "../components/charts/MoneyInOutChart";
 import DailySpendTrendChart from "../components/charts/DailySpendTrendChart";
-import { dashboardApi } from "../api/dashboardApi";
 import InsightCards from "../components/InsightCards";
-import { useNavigate } from "react-router-dom";
-
-
 
 function Card({ title, value, subtext }) {
   return (
@@ -33,6 +30,8 @@ function SectionShell({ title, right, children }) {
 }
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const [health, setHealth] = useState(null);
   const [stats, setStats] = useState(null);
   const [kpis, setKpis] = useState(null);
@@ -52,32 +51,30 @@ export default function Dashboard() {
   const [loadingInsights, setLoadingInsights] = useState(false);
   const [loadingDrilldown, setLoadingDrilldown] = useState(false);
   const [loadingAnomalies, setLoadingAnomalies] = useState(false);
-  const navigate = useNavigate();
-
 
   async function refreshAll(monthOverride) {
     setError(null);
-  
+
     const h = await dashboardApi.health();
     setHealth(h);
-  
+
     const s = await dashboardApi.stats();
     setStats(s);
-  
+
     if (s?.total_rows > 0) {
       const summaryRes = await dashboardApi.summary();
       setKpis(summaryRes?.kpis || null);
-  
+
       const chartRes = await dashboardApi.charts(monthOverride || selectedMonth);
       const c = chartRes?.charts || null;
       setCharts(c);
-  
+
       const months = c?.available_months || (c?.in_vs_out_month || []).map((x) => x.month);
       setAvailableMonths(months);
-  
+
       const resolved = c?.month || (months.length ? months[months.length - 1] : null);
       if (!selectedMonth && resolved) setSelectedMonth(resolved);
-  
+
       await refreshInsights(resolved);
     } else {
       setKpis(null);
@@ -92,10 +89,10 @@ export default function Dashboard() {
 
   async function refreshInsights(month) {
     if (!month) return;
-  
+
     setLoadingInsights(true);
     setLoadingAnomalies(true);
-  
+
     try {
       const deltas = await dashboardApi.monthlyDeltas(month, 3, 5);
       setMonthlyDeltaData(deltas || null);
@@ -104,7 +101,7 @@ export default function Dashboard() {
     } finally {
       setLoadingInsights(false);
     }
-  
+
     try {
       const a = await dashboardApi.anomalies(30, 5);
       setAnomalies(a || null);
@@ -114,7 +111,7 @@ export default function Dashboard() {
       setLoadingAnomalies(false);
     }
   }
-  
+
   async function loadCategoryBreakdown(month, category) {
     if (!category) return;
     setLoadingDrilldown(true);
@@ -128,7 +125,6 @@ export default function Dashboard() {
     }
   }
 
-  
   async function handleSeed() {
     setLoadingSeed(true);
     setError(null);
@@ -153,7 +149,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     refreshAll().catch((e) => setError(e?.message || "Failed to load dashboard"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const statusPill = (
@@ -171,8 +166,6 @@ export default function Dashboard() {
   const inVsOut = charts?.in_vs_out_month || [];
   const dailyTrend = charts?.daily_spend_trend || [];
 
-
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -184,40 +177,40 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <button
-          onClick={handleSeed}
-          disabled={loadingSeed}
-          className={
-            "inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-bold transition " +
-            (loadingSeed ? "cursor-not-allowed bg-slate-800 text-slate-400" : "bg-blue-600 text-white hover:bg-blue-500")
-          }
-        >
-          {loadingSeed ? "Loading..." : "Load Demo Data"}
-        </button>
         <div className="flex items-center gap-3">
-  {availableMonths?.length ? (
-    <select
-      value={selectedMonth || ""}
-      onChange={async (e) => {
-        const m = e.target.value;
-        setSelectedMonth(m);
-        setSelectedCategory(null);
-        setCategoryBreakdown(null);
-        await refreshAll(m);
-      }}
-      className="rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-200"
-    >
-      {availableMonths.map((m) => (
-        <option key={m} value={m}>{m}</option>
-      ))}
-    </select>
-  ) : null}
+          <button
+            onClick={handleSeed}
+            disabled={loadingSeed}
+            className={
+              "inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-bold transition " +
+              (loadingSeed
+                ? "cursor-not-allowed bg-slate-800 text-slate-400"
+                : "bg-blue-600 text-white hover:bg-blue-500")
+            }
+          >
+            {loadingSeed ? "Loading..." : "Load Demo Data"}
+          </button>
 
-  
-</div>
-
-
-        
+          {availableMonths?.length ? (
+            <select
+              value={selectedMonth || ""}
+              onChange={async (e) => {
+                const m = e.target.value;
+                setSelectedMonth(m);
+                setSelectedCategory(null);
+                setCategoryBreakdown(null);
+                await refreshAll(m);
+              }}
+              className="rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-200"
+            >
+              {availableMonths.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
+          ) : null}
+        </div>
       </div>
 
       {error ? (
@@ -261,81 +254,91 @@ export default function Dashboard() {
           </SectionShell>
 
           <SectionShell title="Executive insight">
-  {!kpis ? (
-    <div className="text-slate-400">Load demo data to generate insights.</div>
-  ) : loadingInsights ? (
-    <div className="text-sm text-slate-400">Loading insights...</div>
-  ) : (
-    <div className="space-y-4 text-sm text-slate-200">
-      <div>
-        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">What changed this month</div>
-        <div className="mt-2 space-y-3">
-          {(monthlyDeltaData?.top_category_increases || []).map((c) => (
-            <div key={c.category} className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
-              <div className="flex items-center justify-between">
-                <div className="font-bold">{c.category}</div>
-                <div className="text-slate-300">{fmtMoney(c.delta)}</div>
-              </div>
-              <div className="mt-2 text-xs text-slate-400">Top drivers</div>
-              <div className="mt-1 space-y-1">
-                {(c.top_merchants || []).slice(0, 3).map((m) => (
-                  <div key={m.merchant} className="flex items-center justify-between text-xs">
-                    <span className="text-slate-300">{m.merchant}</span>
-                    <span className="text-slate-200">{fmtMoney(m.delta)}</span>
-                  </div>
-                ))}
-              </div>
-              <button
-                onClick={() => {
-                  setSelectedCategory(c.category);
-                  loadCategoryBreakdown(selectedMonth, c.category);
-                }}
-                className="mt-2 text-xs font-semibold text-blue-300 hover:text-blue-200"
-              >
-                View transactions
-              </button>
-            </div>
-          ))}
-          {!monthlyDeltaData?.top_category_increases?.length ? (
-            <div className="text-xs text-slate-400">Not enough history for month over month comparisons.</div>
-          ) : null}
-        </div>
-      </div>
-
-      <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
-        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Biggest spend driver</div>
-        <div className="mt-1 text-base font-extrabold">{kpis.biggest_spend_driver?.category || "N/A"}</div>
-        <div className="mt-1 text-xs text-slate-300">
-          Change vs last month: <span className="font-bold">{fmtMoney(kpis.biggest_spend_driver?.delta || 0)}</span>
-        </div>
-      </div>
-
-      <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
-        <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Anomalies (last 30 days)</div>
-        {loadingAnomalies ? (
-          <div className="mt-2 text-xs text-slate-400">Loading...</div>
-        ) : (
-          <div className="mt-2 space-y-2">
-            {(anomalies?.anomalies || []).slice(0, 5).map((a) => (
-              <div key={a.transaction_id} className="flex items-start justify-between gap-3 text-xs">
+            {!kpis ? (
+              <div className="text-slate-400">Load demo data to generate insights.</div>
+            ) : loadingInsights ? (
+              <div className="text-sm text-slate-400">Loading insights...</div>
+            ) : (
+              <div className="space-y-4 text-sm text-slate-200">
                 <div>
-                  <div className="font-semibold text-slate-200">{a.merchant}</div>
-                  <div className="text-slate-400">{a.posted_date}  {a.category}</div>
-                  <div className="text-slate-500">{a.reason}</div>
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                    What changed this month
+                  </div>
+                  <div className="mt-2 space-y-3">
+                    {(monthlyDeltaData?.top_category_increases || []).map((c) => (
+                      <div key={c.category} className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+                        <div className="flex items-center justify-between">
+                          <div className="font-bold">{c.category}</div>
+                          <div className="text-slate-300">{fmtMoney(c.delta)}</div>
+                        </div>
+                        <div className="mt-2 text-xs text-slate-400">Top drivers</div>
+                        <div className="mt-1 space-y-1">
+                          {(c.top_merchants || []).slice(0, 3).map((m) => (
+                            <div key={m.merchant} className="flex items-center justify-between text-xs">
+                              <span className="text-slate-300">{m.merchant}</span>
+                              <span className="text-slate-200">{fmtMoney(m.delta)}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <button
+                          onClick={() => {
+                            setSelectedCategory(c.category);
+                            loadCategoryBreakdown(selectedMonth, c.category);
+                          }}
+                          className="mt-2 text-xs font-semibold text-blue-300 hover:text-blue-200"
+                        >
+                          View transactions
+                        </button>
+                      </div>
+                    ))}
+                    {!monthlyDeltaData?.top_category_increases?.length ? (
+                      <div className="text-xs text-slate-400">
+                        Not enough history for month over month comparisons.
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
-                <div className="font-bold text-slate-100">{fmtMoney(a.amount)}</div>
-              </div>
-            ))}
-            {!anomalies?.anomalies?.length ? (
-              <div className="text-xs text-slate-400">No anomalies flagged by the demo rule.</div>
-            ) : null}
-          </div>
-        )}
-      </div>
-    </div>
-  )}
-</SectionShell>
 
+                <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Biggest spend driver</div>
+                  <div className="mt-1 text-base font-extrabold">
+                    {kpis.biggest_spend_driver?.category || "N/A"}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-300">
+                    Change vs last month:{" "}
+                    <span className="font-bold">{fmtMoney(kpis.biggest_spend_driver?.delta || 0)}</span>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                    Anomalies (last 30 days)
+                  </div>
+                  {loadingAnomalies ? (
+                    <div className="mt-2 text-xs text-slate-400">Loading...</div>
+                  ) : (
+                    <div className="mt-2 space-y-2">
+                      {(anomalies?.anomalies || []).slice(0, 5).map((a) => (
+                        <div key={a.transaction_id} className="flex items-start justify-between gap-3 text-xs">
+                          <div>
+                            <div className="font-semibold text-slate-200">{a.merchant}</div>
+                            <div className="text-slate-400">
+                              {a.posted_date} {a.category}
+                            </div>
+                            <div className="text-slate-500">{a.reason}</div>
+                          </div>
+                          <div className="font-bold text-slate-100">{fmtMoney(a.amount)}</div>
+                        </div>
+                      ))}
+                      {!anomalies?.anomalies?.length ? (
+                        <div className="text-xs text-slate-400">No anomalies flagged by the demo rule.</div>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </SectionShell>
         </div>
 
         <div className="space-y-6 lg:col-span-2">
@@ -344,7 +347,11 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 <Card title="MTD Total Spend" value={fmtMoney(kpis.mtd_total_spend)} />
                 <Card title="MTD Net Cashflow" value={fmtMoney(kpis.mtd_net_cashflow)} />
-                <Card title="Recurring Total" value={fmtMoney(kpis.mtd_recurring_total)} subtext="Subscriptions category" />
+                <Card
+                  title="Recurring Total"
+                  value={fmtMoney(kpis.mtd_recurring_total)}
+                  subtext="Subscriptions category"
+                />
                 <Card title="Subscriptions Count" value={fmtNumber(kpis.subscriptions_count)} />
                 <Card title="Anomalies" value={fmtNumber(kpis.anomalies_count_30d)} subtext="Last 30 days (demo rule)" />
                 <Card
@@ -357,25 +364,26 @@ export default function Dashboard() {
               <div className="text-sm text-slate-400">No KPI data yet. Click Load Demo Data.</div>
             )}
           </SectionShell>
-            <SectionShell title="AI insights">
-              <InsightCards
-                month={selectedMonth}
-                onDrilldown={(dd) => {
-                  if (!dd) return;
 
-                  if (dd.type === "category") {
-                    setSelectedCategory(dd.value);
-                    loadCategoryBreakdown(selectedMonth, dd.value);
-                  }
+          <SectionShell title="AI insights">
+            <InsightCards
+              month={selectedMonth}
+              onDrilldown={(dd) => {
+                if (!dd) return;
 
-                  if (dd.type === "subscriptions") {
-                    navigate("/subscriptions");
-                  }
-                }}
-              />
-            </SectionShell>
+                if (dd.type === "category") {
+                  setSelectedCategory(dd.value);
+                  loadCategoryBreakdown(selectedMonth, dd.value);
+                  return;
+                }
+
+                if (dd.type === "subscriptions") {
+                  navigate("/subscriptions");
+                }
+              }}
+            />
+          </SectionShell>
         </div>
-        
       </div>
 
       <SectionShell title="Trends (from analytics engine)">
@@ -387,81 +395,87 @@ export default function Dashboard() {
               </div>
 
               <div className="mt-3">
-              <SpendByCategoryChart
-                data={spendByCategory}
-                onSelectCategory={(category) => {
-                  setSelectedCategory(category);
-                  loadCategoryBreakdown(selectedMonth, category);
-                }}
-              />
+                <SpendByCategoryChart
+                  data={spendByCategory}
+                  onSelectCategory={(category) => {
+                    setSelectedCategory(category);
+                    loadCategoryBreakdown(selectedMonth, category);
+                  }}
+                />
 
-              {selectedCategory ? (
-                <div className="mt-3 text-xs text-slate-300">
-                  Selected category: <span className="font-semibold text-white">{selectedCategory}</span>
-                </div>
-              ) : null}
+                {selectedCategory ? (
+                  <div className="mt-3 text-xs text-slate-300">
+                    Selected category: <span className="font-semibold text-white">{selectedCategory}</span>
+                  </div>
+                ) : null}
 
-{selectedCategory ? (
-  <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-950/30 p-4">
-    <div className="flex items-center justify-between">
-      <div className="text-sm font-bold text-slate-100">Drilldown: {selectedCategory}</div>
-      <button
-        onClick={() => {
-          setSelectedCategory(null);
-          setCategoryBreakdown(null);
-        }}
-        className="text-xs font-semibold text-slate-300 hover:text-white"
-      >
-        Clear
-      </button>
-    </div>
+                {selectedCategory ? (
+                  <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-950/30 p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm font-bold text-slate-100">Drilldown: {selectedCategory}</div>
+                      <button
+                        onClick={() => {
+                          setSelectedCategory(null);
+                          setCategoryBreakdown(null);
+                        }}
+                        className="text-xs font-semibold text-slate-300 hover:text-white"
+                      >
+                        Clear
+                      </button>
+                    </div>
 
-    {loadingDrilldown ? (
-      <div className="mt-3 text-xs text-slate-400">Loading breakdown...</div>
-    ) : !categoryBreakdown ? (
-      <div className="mt-3 text-xs text-slate-400">Select a category to see top merchants and transactions.</div>
-    ) : (
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top merchants</div>
-          <div className="mt-2 space-y-2">
-            {(categoryBreakdown.top_merchants || []).map((m) => (
-              <div key={m.merchant} className="flex items-center justify-between text-xs">
-                <span className="text-slate-200">{m.merchant}</span>
-                <span className="font-bold text-slate-100">{fmtMoney(m.total_spend)}</span>
-              </div>
-            ))}
-            {!categoryBreakdown.top_merchants?.length ? (
-              <div className="text-xs text-slate-400">No spend found for this category in {categoryBreakdown.month}.</div>
-            ) : null}
-          </div>
-        </div>
+                    {loadingDrilldown ? (
+                      <div className="mt-3 text-xs text-slate-400">Loading breakdown...</div>
+                    ) : !categoryBreakdown ? (
+                      <div className="mt-3 text-xs text-slate-400">
+                        Select a category to see top merchants and transactions.
+                      </div>
+                    ) : (
+                      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+                        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top merchants</div>
+                          <div className="mt-2 space-y-2">
+                            {(categoryBreakdown.top_merchants || []).map((m) => (
+                              <div key={m.merchant} className="flex items-center justify-between text-xs">
+                                <span className="text-slate-200">{m.merchant}</span>
+                                <span className="font-bold text-slate-100">{fmtMoney(m.total_spend)}</span>
+                              </div>
+                            ))}
+                            {!categoryBreakdown.top_merchants?.length ? (
+                              <div className="text-xs text-slate-400">
+                                No spend found for this category in {categoryBreakdown.month}.
+                              </div>
+                            ) : null}
+                          </div>
+                        </div>
 
-        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top transactions</div>
-          <div className="mt-2 space-y-2">
-            {(categoryBreakdown.top_transactions || []).map((t) => (
-              <div key={t.transaction_id} className="flex items-start justify-between gap-3 text-xs">
-                <div>
-                  <div className="font-semibold text-slate-200">{t.merchant}</div>
-                  <div className="text-slate-400">{t.posted_date}  {t.account_id}</div>
-                </div>
-                <div className="font-bold text-slate-100">{fmtMoney(t.amount)}</div>
-              </div>
-            ))}
-            {!categoryBreakdown.top_transactions?.length ? (
-              <div className="text-xs text-slate-400">No transactions found.</div>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    )}
-  </div>
-) : null}
-
+                        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                            Top transactions
+                          </div>
+                          <div className="mt-2 space-y-2">
+                            {(categoryBreakdown.top_transactions || []).map((t) => (
+                              <div key={t.transaction_id} className="flex items-start justify-between gap-3 text-xs">
+                                <div>
+                                  <div className="font-semibold text-slate-200">{t.merchant}</div>
+                                  <div className="text-slate-400">
+                                    {t.posted_date} {t.account_id}
+                                  </div>
+                                </div>
+                                <div className="font-bold text-slate-100">{fmtMoney(t.amount)}</div>
+                              </div>
+                            ))}
+                            {!categoryBreakdown.top_transactions?.length ? (
+                              <div className="text-xs text-slate-400">No transactions found.</div>
+                            ) : null}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : null}
               </div>
             </div>
-
 
             <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
               <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
@@ -477,25 +491,17 @@ export default function Dashboard() {
               </div>
             </div>
 
-
             <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
-            <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Daily spend trend (latest 14d)
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Daily spend trend (latest 14d)
+              </div>
+
+              <div className="mt-3">
+                <DailySpendTrendChart data={dailyTrend.slice(-14)} height={220} />
+              </div>
+
+              <div className="mt-3 text-xs text-slate-500">Hover points to see day and spend.</div>
             </div>
-
-            <div className="mt-3">
-              <DailySpendTrendChart
-                data={dailyTrend.slice(-14)}
-                height={220}
-              />
-            </div>
-
-            <div className="mt-3 text-xs text-slate-500">
-              Hover points to see day and spend.
-            </div>
-          </div>
-
-
           </div>
         ) : (
           <div className="text-sm text-slate-400">Load demo data to generate trends.</div>
