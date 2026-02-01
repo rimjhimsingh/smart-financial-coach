@@ -6,6 +6,8 @@ import SpendByCategoryChart from "../components/charts/SpendByCategoryChart";
 import MoneyInOutChart from "../components/charts/MoneyInOutChart";
 import DailySpendTrendChart from "../components/charts/DailySpendTrendChart";
 import InsightCards from "../components/InsightCards";
+import SpendByCategoryPieChart from "../components/charts/SpendByCategoryPieChart";
+
 
 function Card({ title, value, subtext }) {
   return (
@@ -152,7 +154,7 @@ export default function Dashboard() {
   }, []);
 
   const statusPill = (
-    <span className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate கொள்ள text-slate-300">
+    <span className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">
       <span
         className={
           "h-2 w-2 rounded-full " + (health?.status === "online" ? "bg-emerald-400" : "bg-yellow-400")
@@ -228,30 +230,57 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-1">
-          <SectionShell title="Dataset">
-            <div className="text-sm text-slate-300">
-              {stats ? (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Rows</span>
-                    <span className="font-semibold">{fmtNumber(stats.total_rows)}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Accounts</span>
-                    <span className="font-semibold">{stats.accounts_loaded?.join(", ")}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-400">Date range</span>
-                    <span className="font-semibold">
-                      {stats.date_min} to {stats.date_max}
-                    </span>
+          <SectionShell title="Financial health snapshot">
+            {kpis ? (
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Cashflow this month</span>
+                  <span
+                    className={
+                      "font-bold " +
+                      (Number(kpis.mtd_net_cashflow || 0) >= 0 ? "text-emerald-400" : "text-red-400")
+                    }
+                  >
+                    {Number(kpis.mtd_net_cashflow || 0) >= 0 ? "Positive" : "Negative"}
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Total spend this month</span>
+                  <span className="font-bold text-slate-100">{fmtMoney(kpis.mtd_total_spend || 0)}</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Recurring commitments</span>
+                  <span className="font-bold text-slate-100">{fmtMoney(kpis.mtd_recurring_total || 0)} / mo</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Subscriptions</span>
+                  <span className="font-bold text-slate-100">{fmtNumber(kpis.subscriptions_count || 0)}</span>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-400">Biggest driver</span>
+                  <span className="font-bold text-slate-100">
+                    {kpis.biggest_spend_driver?.category || "N/A"}
+                  </span>
+                </div>
+
+                <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Coach note</div>
+                  <div className="mt-2 text-sm text-slate-200">
+                    {Number(kpis.mtd_net_cashflow || 0) >= 0
+                      ? "You are cashflow positive this month. Keep recurring costs steady and watch your top category."
+                      : "You are cashflow negative this month. Start by tightening your top category and reviewing subscriptions."}
                   </div>
                 </div>
-              ) : (
-                "loading..."
-              )}
-            </div>
+              </div>
+            ) : (
+              <div className="text-sm text-slate-400">Load demo data to generate your financial snapshot.</div>
+            )}
           </SectionShell>
+
 
           <SectionShell title="Executive insight">
             {!kpis ? (
@@ -292,18 +321,14 @@ export default function Dashboard() {
                       </div>
                     ))}
                     {!monthlyDeltaData?.top_category_increases?.length ? (
-                      <div className="text-xs text-slate-400">
-                        Not enough history for month over month comparisons.
-                      </div>
+                      <div className="text-xs text-slate-400">Not enough history for month over month comparisons.</div>
                     ) : null}
                   </div>
                 </div>
 
                 <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-3">
                   <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Biggest spend driver</div>
-                  <div className="mt-1 text-base font-extrabold">
-                    {kpis.biggest_spend_driver?.category || "N/A"}
-                  </div>
+                  <div className="mt-1 text-base font-extrabold">{kpis.biggest_spend_driver?.category || "N/A"}</div>
                   <div className="mt-1 text-xs text-slate-300">
                     Change vs last month:{" "}
                     <span className="font-bold">{fmtMoney(kpis.biggest_spend_driver?.delta || 0)}</span>
@@ -347,11 +372,7 @@ export default function Dashboard() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 <Card title="MTD Total Spend" value={fmtMoney(kpis.mtd_total_spend)} />
                 <Card title="MTD Net Cashflow" value={fmtMoney(kpis.mtd_net_cashflow)} />
-                <Card
-                  title="Recurring Total"
-                  value={fmtMoney(kpis.mtd_recurring_total)}
-                  subtext="Subscriptions category"
-                />
+                <Card title="Recurring Total" value={fmtMoney(kpis.mtd_recurring_total)} subtext="Subscriptions category" />
                 <Card title="Subscriptions Count" value={fmtNumber(kpis.subscriptions_count)} />
                 <Card title="Anomalies" value={fmtNumber(kpis.anomalies_count_30d)} subtext="Last 30 days (demo rule)" />
                 <Card
@@ -411,7 +432,7 @@ export default function Dashboard() {
                   </div>
                 ) : null}
 
-                <div className="mt-3 text-xs text-slate-500">Tip: click a bar to open category drilldown</div>
+
               </div>
 
               <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
@@ -438,6 +459,8 @@ export default function Dashboard() {
                   <div className="mt-3 text-sm text-slate-400">No breakdown available.</div>
                 ) : (
                   <div className="mt-4 space-y-4">
+                    <div className="text-sm font-extrabold text-white">{selectedCategory}</div>
+
                     <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
                       <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top merchants</div>
                       <div className="mt-2 space-y-2">
@@ -456,9 +479,7 @@ export default function Dashboard() {
                     </div>
 
                     <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                        Top transactions
-                      </div>
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top transactions</div>
                       <div className="mt-2 space-y-2">
                         {(categoryBreakdown.top_transactions || []).map((t) => (
                           <div key={t.transaction_id} className="flex items-start justify-between gap-3 text-xs">
@@ -482,7 +503,7 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
                 <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
                   Money in vs out (monthly)
                 </div>
@@ -496,24 +517,28 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
-                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">What it means</div>
-                <div className="mt-3 text-sm text-slate-300">
-                  Track whether you stay cashflow positive and identify months where spending overtakes income.
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Spend mix by category (month)
+                </div>
+
+                <div className="mt-3">
+                  <SpendByCategoryPieChart data={spendByCategory} />
+                </div>
+
+                <div className="mt-2 text-xs text-slate-500">
+                  Breakdown of spending across categories for the selected month.
                 </div>
               </div>
             </div>
 
+
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
               <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
-                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                  Daily spend trend (latest 14d)
-                </div>
-
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Daily spend trend (latest 14d)</div>
                 <div className="mt-3">
                   <DailySpendTrendChart data={dailyTrend.slice(-14)} height={260} />
                 </div>
-
                 <div className="mt-3 text-xs text-slate-500">Hover points to see day and spend.</div>
               </div>
 

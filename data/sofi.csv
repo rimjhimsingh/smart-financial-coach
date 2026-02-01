@@ -1,41 +1,189 @@
 transaction_id,posted_date,merchant,amount,currency,category,account_id
+58c42739-e24c-4d85-887f-38e69cee4e58,2025-08-01,Employer Payroll,2500.0,USD,Income,sofi
+e2051352-82da-4893-a7ea-e7b7c964a0d9,2025-08-01,Rent Payment,-2000.0,USD,Rent,sofi
+0c792d13-e6b5-4a2e-8843-6937928d15d5,2025-08-05,Internet Provider,-75.0,USD,Utilities,sofi
+6a3e2e2e-d1a5-4d55-a486-748d57420cab,2025-08-05,Lyft,-16.63,USD,Transportation,sofi
+17d4fa2a-87cd-4d32-8cad-bc2a3ed2fa48,2025-08-06,Blue Bottle,-8.67,USD,Coffee,sofi
+7f73753e-aa62-4c62-948a-dc3840b3e31f,2025-08-06,Dropbox,-9.99,USD,Subscriptions,sofi
+6ebeed82-8a60-4f5e-aec0-d2462944aa49,2025-08-06,Netflix,-15.49,USD,Subscriptions,sofi
+5d6a16d5-7f3f-4bf2-a46c-a33186e28756,2025-08-06,Spotify,-11.99,USD,Subscriptions,sofi
+93d778f1-2157-42fa-84e8-c28ca719e1a9,2025-08-07,Lyft,-21.37,USD,Transportation,sofi
+348f9eb9-d945-4562-835d-3a547e77a586,2025-08-09,Costco,-88.51,USD,Groceries,sofi
+e4662519-34c0-47f8-8034-edd507ed0e72,2025-08-11,Dropbox,-9.99,USD,Subscriptions,sofi
+970fd5ed-507f-4b32-9421-74a589b9182c,2025-08-11,Grocery Store,-73.42,USD,Groceries,sofi
+04757033-e4d8-4ad7-b91f-016eb3d176ef,2025-08-11,Netflix,-15.49,USD,Subscriptions,sofi
+f087e523-1db9-4426-bdf8-288aa54063cd,2025-08-11,Spotify,-11.99,USD,Subscriptions,sofi
+e454b05f-90ce-41af-9df4-29e2de56b12f,2025-08-14,Dunkin,-3.95,USD,Coffee,sofi
+800b55d1-2001-445b-8083-cb0195c0cc1e,2025-08-15,Employer Payroll,2500.0,USD,Income,sofi
+cbeb9e47-1eea-4662-b308-3eb2cfd88ed3,2025-08-19,Chipotle,-13.79,USD,Dining,sofi
+b2a4b77d-c820-4ef6-9240-51ad770e7a78,2025-08-20,Dropbox,-9.99,USD,Subscriptions,sofi
+ec596139-d4a6-4bba-a7ac-74521eea0337,2025-08-20,Netflix,-15.49,USD,Subscriptions,sofi
+769ed843-7f02-436e-8f25-3e115f44607b,2025-08-20,Spotify,-11.99,USD,Subscriptions,sofi
+96297bbf-732c-483c-b86b-51efe490f482,2025-08-23,NJ Transit,-4.29,USD,Transportation,sofi
+88a912bb-d5df-42a5-96b0-4f1685166af3,2025-08-25,Blue Bottle,-8.15,USD,Coffee,sofi
+8644353c-ee2b-4f63-8054-e0906b638296,2025-08-29,Employer Payroll,2500.0,USD,Income,sofi
+6c274da4-a958-4eda-9237-79f6b2fadce0,2025-08-31,DoorDash,-32.25,USD,Dining,sofi
+44e19b49-3a5e-4437-9b86-8d120c34937b,2025-09-01,Rent Payment,-2000.0,USD,Rent,sofi
+f118dc19-7c64-4078-8bbe-53dbe5664d90,2025-09-01,Whole Foods,-64.29,USD,Groceries,sofi
+212c4787-4dd2-4f77-b762-cfa46e7b865a,2025-09-03,Uber,-28.44,USD,Transportation,sofi
+ab31c092-9ec6-4dfd-8633-88d6f4c5ab21,2025-09-04,Trader Joe's,-34.1,USD,Groceries,sofi
+01d5bf21-f450-45df-af61-5c7c9e97b91a,2025-09-05,Gas Utility,-55.0,USD,Utilities,sofi
+0e26d6dc-c4dc-4f51-b4bf-441b0dddad0c,2025-09-06,Dropbox,-9.99,USD,Subscriptions,sofi
+53aad904-60d2-4af2-a9a4-57055b8cf871,2025-09-06,Netflix,-15.49,USD,Subscriptions,sofi
+88688c19-a32c-42dc-9f08-9314869c8e7f,2025-09-06,Spotify,-11.99,USD,Subscriptions,sofi
+073ca719-88f8-44f1-a3db-a18f44f2a01c,2025-09-07,DoorDash,-27.34,USD,Dining,sofi
+1f8fac91-7a2e-4df6-a846-966ed8b21af1,2025-09-09,Amazon,-44.38,USD,Shopping,sofi
+ded98cca-65de-4952-ab4c-170492655ca2,2025-09-10,Blue Bottle,-6.02,USD,Coffee,sofi
+761a19f3-7b1d-494c-845b-6db09d63a415,2025-09-11,Dropbox,-9.99,USD,Subscriptions,sofi
+ca9e0565-7ee1-42bf-91aa-7fe855dcb360,2025-09-11,Netflix,-15.49,USD,Subscriptions,sofi
+48665e2e-561e-4716-ab89-8efb9cf5ac29,2025-09-11,Spotify,-11.99,USD,Subscriptions,sofi
+7581c148-63ee-4f44-b6b1-ef7405674a3e,2025-09-11,Starbucks,-5.78,USD,Coffee,sofi
+50ca1aed-a0f7-46b8-8816-1f4861e01280,2025-09-12,Employer Payroll,2500.0,USD,Income,sofi
+ab19026d-9563-44f3-b39b-08a9ca9eb25b,2025-09-12,Sweetgreen,-15.64,USD,Dining,sofi
+fc3d2119-14a4-4639-b441-929ef0333e06,2025-09-14,Costco,-102.12,USD,Groceries,sofi
+f05d234f-f7e0-4f44-bd3a-d880f3439ac8,2025-09-15,Target,-58.85,USD,Shopping,sofi
+f519d184-15e9-4bb4-a764-67e0298a3548,2025-09-16,Uber,-16.75,USD,Transportation,sofi
+6bbb7431-c438-4de4-97b6-ab3357ec8a81,2025-09-20,Dropbox,-9.99,USD,Subscriptions,sofi
+b278cf2b-b6c3-47e0-9f24-518f68231724,2025-09-20,Netflix,-15.49,USD,Subscriptions,sofi
+fe06c4ff-7d76-4b98-82f0-0cca37876e8f,2025-09-20,Spotify,-11.99,USD,Subscriptions,sofi
+881e170b-e0ed-4ec6-ab22-8b75a43dc6cc,2025-09-21,Starbucks,-4.63,USD,Coffee,sofi
+72a0bb48-5615-41eb-bd1f-c29c48715189,2025-09-22,Target,-67.94,USD,Shopping,sofi
+986b3554-8029-49bf-8496-a3b3f14c9906,2025-09-26,Employer Payroll,2500.0,USD,Income,sofi
+60ef3349-bdfe-429c-9938-e3fd9c547957,2025-09-26,Whole Foods,-70.36,USD,Groceries,sofi
+2c01f461-0f01-4204-9e7f-8728ae665fc5,2025-09-29,Starbucks,-4.36,USD,Coffee,sofi
+23c8ef90-66ba-481f-a676-a4219dcf2a9a,2025-10-01,Chipotle,-16.68,USD,Dining,sofi
+657ef4e6-57f0-4eb8-a320-e47be3ace271,2025-10-01,Rent Payment,-2000.0,USD,Rent,sofi
+22d601d0-299d-4f11-a561-7ab7ab5b5f0f,2025-10-05,Costco,-123.46,USD,Groceries,sofi
+4df82040-b234-4f86-a10b-5c3dda763331,2025-10-05,Electric Utility,-165.0,USD,Utilities,sofi
+efb3f9dc-dd52-4e5b-8d77-6bff1b781510,2025-10-06,Dropbox,-9.99,USD,Subscriptions,sofi
+b87d9f12-f9bb-4b86-804e-76b49edde9f9,2025-10-06,Netflix,-15.49,USD,Subscriptions,sofi
+ab810033-b594-4740-a9aa-f4a47c6aa4bb,2025-10-06,Spotify,-11.99,USD,Subscriptions,sofi
+a90e2c55-d33e-4ae9-be12-e4bd6e6419de,2025-10-09,Amazon,-41.49,USD,Shopping,sofi
+06c1ffe8-8036-4952-99ad-aaa725599b51,2025-10-10,Employer Payroll,2500.0,USD,Income,sofi
+32b1810d-0521-41f1-b912-420b8a961e06,2025-10-11,Blue Bottle,-6.19,USD,Coffee,sofi
+11236371-3ac6-4792-a820-b2fc4decb772,2025-10-11,Dropbox,-9.99,USD,Subscriptions,sofi
+6f70807e-eb8b-49a8-8de4-9a73db4103b1,2025-10-11,Netflix,-15.49,USD,Subscriptions,sofi
+d1706064-7a9a-45ea-bd65-16c5c30f543a,2025-10-11,Spotify,-11.99,USD,Subscriptions,sofi
+9196da10-41e7-4b7c-96bb-df77febe8fa1,2025-10-20,Dropbox,-9.99,USD,Subscriptions,sofi
+5115ed45-1a05-4288-80c9-3c532f2d6776,2025-10-20,Lyft,-22.77,USD,Transportation,sofi
+1d075c94-7d25-4696-9772-d85abb84771a,2025-10-20,Netflix,-15.49,USD,Subscriptions,sofi
+386e37b2-8fec-428b-9d62-c84d10a8348e,2025-10-20,Spotify,-11.99,USD,Subscriptions,sofi
+492dbb79-85e7-4e3b-b4e6-d5d6b08a8df4,2025-10-22,Whole Foods,-61.34,USD,Groceries,sofi
+c9a8ed3b-fcc9-4588-b593-eac62662bba1,2025-10-24,Employer Payroll,2500.0,USD,Income,sofi
+4ecf8561-e5de-4e6f-8134-652621e514f6,2025-10-25,Whole Foods,-67.01,USD,Groceries,sofi
+08004aa7-46ce-4d17-8a9f-343bad7ef66f,2025-10-28,Best Buy,-227.33,USD,Shopping,sofi
+2bf88585-a0eb-4d2f-b12d-410f3f609eb7,2025-10-29,Dunkin,-3.59,USD,Coffee,sofi
+db3a2709-88bb-4b1d-9845-ec24d3ced566,2025-10-30,Whole Foods,-60.47,USD,Groceries,sofi
 d450318c-3ff7-48a1-8147-1d77c6ceca71,2025-11-01,Rent Payment,-2000.0,USD,Rent,sofi
 bce4c2c4-2fbb-48a4-9b4d-ab76f3005665,2025-11-02,Grocery Store,-91.0,USD,Groceries,sofi
 f9c9b7ee-cf5e-4737-a6f9-d58da5573231,2025-11-05,Electric Utility,-180.0,USD,Utilities,sofi
+1edcca90-c338-456b-853b-e44df063baea,2025-11-05,Gas Utility,-55.0,USD,Utilities,sofi
+a29f5fbf-d4a1-4a42-b64c-c82cd518edee,2025-11-05,MTA,-2.12,USD,Transportation,sofi
+dde7faf3-d38a-46c6-be3c-7298cda4e978,2025-11-06,Dropbox,-9.99,USD,Subscriptions,sofi
+bdd71cde-f3c2-4ca8-83d6-f05cb5bc8b56,2025-11-06,Netflix,-15.49,USD,Subscriptions,sofi
+0028d9fb-7644-403a-a41c-454a56e2c6b3,2025-11-06,Spotify,-11.99,USD,Subscriptions,sofi
+d5e80033-a64a-42a8-a7c6-8f35573ae315,2025-11-07,Employer Payroll,2500.0,USD,Income,sofi
 031b54a0-2c49-47bf-b21d-d9369972c138,2025-11-07,Internet Provider,-60.0,USD,Utilities,sofi
 6498c051-f4d2-4d06-9cbb-c1d02aa83547,2025-11-09,Grocery Store,-139.0,USD,Groceries,sofi
+e04204b1-ce10-42ba-af05-ec2d5f6fbd4b,2025-11-10,DoorDash,-29.93,USD,Dining,sofi
+599e370f-9d0b-4583-a855-891d3030f0d3,2025-11-11,Dropbox,-9.99,USD,Subscriptions,sofi
+0732f453-d06a-4e45-98a2-408ddfb8f40c,2025-11-11,Lyft,-18.71,USD,Transportation,sofi
+cc74131e-b291-424b-8df3-a10b360dc006,2025-11-11,Netflix,-15.49,USD,Subscriptions,sofi
+ceea587a-5ed4-4b83-9adf-e7efe17a79c4,2025-11-11,Spotify,-11.99,USD,Subscriptions,sofi
+c24e3e76-798a-4195-b5b1-d58f4a1b07f8,2025-11-12,Target,-50.23,USD,Shopping,sofi
+233bdba2-2238-495a-8263-fd2a8bf765ec,2025-11-13,Sweetgreen,-13.04,USD,Dining,sofi
 e27371c0-96fd-4a03-93c0-435a2af5f494,2025-11-14,Employer Payroll,2500.0,USD,Income,sofi
 373dd8c6-3351-4f72-99e2-8f0c0c61223e,2025-11-16,Grocery Store,-130.0,USD,Groceries,sofi
+339387ca-4118-4482-9579-24d171b8d60c,2025-11-16,Starbucks,-5.6,USD,Coffee,sofi
 1d6a624a-2560-4c27-8e31-50156d5d667e,2025-11-18,Gas Station,-32.5,USD,Transportation,sofi
+8cefe1ad-98b2-455c-81c9-8c3cba395f14,2025-11-20,Dropbox,-9.99,USD,Subscriptions,sofi
+51fb65ce-6947-442f-9554-db92ee5e5231,2025-11-20,Netflix,-15.49,USD,Subscriptions,sofi
+78c10378-4b1e-43c9-ae21-595af8ba037e,2025-11-20,Spotify,-11.99,USD,Subscriptions,sofi
 79818fe9-04fb-480d-8a29-169db9f189b3,2025-11-21,Amazon Prime,-14.99,USD,Subscriptions,sofi
+c145c41f-a060-4b28-b094-8d6c45d247cc,2025-11-21,Employer Payroll,2500.0,USD,Income,sofi
+6a50fdf1-0561-4ce6-af33-5af31515cf5a,2025-11-22,MTA,-2.81,USD,Transportation,sofi
 a656b969-659b-49d8-9269-cd8ee381fd12,2025-11-23,Grocery Store,-115.0,USD,Groceries,sofi
+9eb4b078-11fd-4b01-8233-866681da0bc9,2025-11-24,Apple Store,-243.81,USD,Shopping,sofi
 41c43045-5e4e-4ac1-95f6-85b6392d95ca,2025-11-25,AMEX Payment,-800.0,USD,Transfer,sofi
 66e9b126-1887-4b84-a842-07be47e6a43a,2025-11-28,Employer Payroll,2500.0,USD,Income,sofi
 b0263d20-cc40-4d5d-ae0d-10ef55939e8c,2025-11-30,Grocery Store,-115.0,USD,Groceries,sofi
+23dcf6a0-58c6-4a92-9094-6c25e3759d9b,2025-12-01,Dunkin,-4.14,USD,Coffee,sofi
 ade9bdd5-cd1f-40cc-acb8-cc685ed7b80f,2025-12-01,Rent Payment,-2000.0,USD,Rent,sofi
+2d61facb-6fc7-4c1e-8cd3-7871dd3092e5,2025-12-05,Chipotle,-17.55,USD,Dining,sofi
 1b984c0f-b768-4cff-b964-a04b325633d3,2025-12-05,Electric Utility,-180.0,USD,Utilities,sofi
+b5246a7e-af9f-4bbb-9889-65e56f0c0cba,2025-12-05,Employer Payroll,2500.0,USD,Income,sofi
+6fa9b919-2324-466c-a3ad-d07ef03ac316,2025-12-05,Internet Provider,-75.0,USD,Utilities,sofi
+3bbf4b28-e7a4-4047-b2b1-c772a25cff2e,2025-12-06,Dropbox,-9.99,USD,Subscriptions,sofi
 8cc1742b-56eb-4b0c-89cb-1d13812bbefb,2025-12-06,Grocery Store,-145.0,USD,Groceries,sofi
+1614590a-6bd9-4e01-9091-c8fa4c267861,2025-12-06,Netflix,-15.49,USD,Subscriptions,sofi
+9735afbf-58fb-472f-9949-187caffec542,2025-12-06,Spotify,-11.99,USD,Subscriptions,sofi
 c4ff4306-25b8-4559-acd9-75757f5c8877,2025-12-07,Internet Provider,-60.0,USD,Utilities,sofi
+0fc9726a-594f-4419-99b5-9e62d409d6e0,2025-12-08,Apple Store,-271.82,USD,Shopping,sofi
+7a2efe0d-39c0-4ebb-8b6a-9a1208f9096b,2025-12-10,Whole Foods,-53.05,USD,Groceries,sofi
+5d3b0b6b-bd24-4778-b155-894a59275fe7,2025-12-11,Dropbox,-9.99,USD,Subscriptions,sofi
+b39c22e9-5fb5-43ca-9f6f-2eb639e5cc9b,2025-12-11,Netflix,-15.49,USD,Subscriptions,sofi
+f8778776-9c6f-47b9-80fe-ee62e3d3ab45,2025-12-11,Spotify,-11.99,USD,Subscriptions,sofi
 683afd15-d5c6-4291-abb9-33a61842d7f4,2025-12-12,Employer Payroll,2500.0,USD,Income,sofi
 9bf46a77-28e1-4380-9860-99dcce3d1112,2025-12-13,Grocery Store,-91.0,USD,Groceries,sofi
 32aab42e-e41e-485b-856c-bf3a995751a0,2025-12-14,Gas Station,-41.2,USD,Transportation,sofi
+bd29ba95-6749-45df-b5a0-5b98a391e9b4,2025-12-15,Chipotle,-16.8,USD,Dining,sofi
+4044c84c-0cba-4cb0-bb33-edbbb18b76be,2025-12-17,Blue Bottle,-6.05,USD,Coffee,sofi
+7d2b7464-2259-4c12-a165-35d976a5791f,2025-12-19,Apple Store,-205.42,USD,Shopping,sofi
+29853673-e8b3-4bbc-87c2-feab1c812629,2025-12-19,Employer Payroll,2500.0,USD,Income,sofi
+ebcd03c1-443a-42e9-a1d8-bd2f77363d45,2025-12-20,Dropbox,-9.99,USD,Subscriptions,sofi
 b45ab7bb-b338-465e-9c33-49b89b17e7ba,2025-12-20,Grocery Store,-133.0,USD,Groceries,sofi
+002ac596-55e7-4e94-ad03-f6cee15f5111,2025-12-20,Netflix,-15.49,USD,Subscriptions,sofi
+b331c3a0-d403-473e-bace-8d833cc5214c,2025-12-20,Spotify,-11.99,USD,Subscriptions,sofi
+cfd0f055-2d8c-499e-b8f0-f02709d2a5a2,2025-12-20,Target,-48.14,USD,Shopping,sofi
 85ffd851-0668-43e8-ba52-4702a11bf4d8,2025-12-21,Amazon Prime,-14.99,USD,Subscriptions,sofi
+66eacf8f-2832-4181-a321-4f70bc8b9983,2025-12-21,DoorDash,-22.31,USD,Dining,sofi
 132e289c-1369-4d92-bd01-147f713ec939,2025-12-25,AMEX Payment,-800.0,USD,Transfer,sofi
+38b74ab2-8869-4e72-919d-b455687f3667,2025-12-25,Starbucks,-6.97,USD,Coffee,sofi
+95ab09f8-c1b7-4777-9714-fc6c6cf42d4e,2025-12-26,Dunkin,-4.65,USD,Coffee,sofi
 795859d5-fa31-4bc5-94ca-ca2963ac1ceb,2025-12-26,Employer Payroll,2500.0,USD,Income,sofi
 85a595d5-8dbf-42ab-bf67-2a2c184d6e98,2025-12-27,Grocery Store,-99.0,USD,Groceries,sofi
+d58412bd-045c-498c-975d-99194ba86f9d,2025-12-29,Apple Store,-284.55,USD,Shopping,sofi
 e07f0767-b517-4bb2-a86b-5f273392b1c3,2026-01-01,Rent Payment,-2000.0,USD,Rent,sofi
+af926fe7-ea93-4c94-a7cf-7290391ae71f,2026-01-02,Employer Payroll,2500.0,USD,Income,sofi
+9e3197bf-0099-4a7b-b851-a06b6151e72d,2026-01-02,Starbucks,-5.79,USD,Coffee,sofi
 dedfce74-c567-41ca-bcd6-6644c31bfba0,2026-01-03,Grocery Store,-91.0,USD,Groceries,sofi
+c858e81e-c828-45a7-a3a0-fd3ed5946956,2026-01-03,Grocery Store,-95.35,USD,Groceries,sofi
+86b7a693-a15a-46f3-a3fd-3289b2f975c2,2026-01-04,Best Buy,-226.82,USD,Shopping,sofi
 d18e6372-77d9-4747-b441-1cde7dbabbc9,2026-01-05,Electric Utility,-180.0,USD,Utilities,sofi
+d261ded8-ea4e-4196-bbe5-3ea7a0a3be5b,2026-01-05,Electric Utility,-165.0,USD,Utilities,sofi
+029a5f86-bbaa-43d7-9866-75f0174b1b7a,2026-01-06,Apple Store,-236.7,USD,Shopping,sofi
+7fc18cc9-77b5-43d7-8dce-eed68a72baa7,2026-01-06,Dropbox,-9.99,USD,Subscriptions,sofi
+214b439e-e5db-4d4a-b44a-f37c8b9f42ca,2026-01-06,Netflix,-15.49,USD,Subscriptions,sofi
+36d0996e-fd9d-4eda-a04a-560f5363bc42,2026-01-06,Spotify,-11.99,USD,Subscriptions,sofi
 881fc7da-1d53-45d8-887d-509b41b00a77,2026-01-07,Internet Provider,-60.0,USD,Utilities,sofi
+98695729-17d1-442d-96c7-6c8a595f1bcb,2026-01-08,Lyft,-19.22,USD,Transportation,sofi
 7c0741e2-0b99-457b-b695-4f65005cc50f,2026-01-09,Employer Payroll,2500.0,USD,Income,sofi
+2d5b71d9-41ec-4170-a526-d2db21ab6573,2026-01-09,Whole Foods,-67.62,USD,Groceries,sofi
 f4d66b41-2bee-4c32-92ef-0457e90d3080,2026-01-10,Grocery Store,-121.0,USD,Groceries,sofi
+fa6c6f7b-db4b-47f6-9d45-f56263ca5204,2026-01-11,Dropbox,-9.99,USD,Subscriptions,sofi
+e9295150-7194-441b-9710-0df049c63285,2026-01-11,Netflix,-15.49,USD,Subscriptions,sofi
+83c098a6-b181-4630-82af-dd54ed391d06,2026-01-11,Spotify,-11.99,USD,Subscriptions,sofi
+7693325e-5b48-49b1-9c21-357b9caf0983,2026-01-15,Blue Bottle,-8.38,USD,Coffee,sofi
 851fbb01-a724-4974-96f5-4f5e3cb7e98c,2026-01-15,Gas Station,-36.1,USD,Transportation,sofi
+37d6c087-a52a-4424-a8dc-ec22ed79400f,2026-01-16,Employer Payroll,2500.0,USD,Income,sofi
+ada80f83-64d8-4b79-b34c-fc7f928a4331,2026-01-16,Trader Joe's,-50.6,USD,Groceries,sofi
 ebb6332e-a4d4-4d66-9420-c89599000f94,2026-01-17,Grocery Store,-153.0,USD,Groceries,sofi
+0b8663e2-7791-41a0-a24d-0f24ffaa4493,2026-01-18,Local Restaurant,-39.53,USD,Dining,sofi
 14e381e9-5804-4169-8f69-3ae2a2168b9d,2026-01-18,Medical Provider,-600.0,USD,Healthcare,sofi
+d4bc8b62-aa01-4112-8fe2-9d8a36241c96,2026-01-19,Whole Foods,-70.65,USD,Groceries,sofi
+4e64b0c6-d7e2-4893-a1c0-b6016419f03d,2026-01-20,Dropbox,-9.99,USD,Subscriptions,sofi
+e398c391-f567-4f29-ab06-ed6027bbe910,2026-01-20,Netflix,-15.49,USD,Subscriptions,sofi
+d104c011-70bb-47bd-b4fe-97ec18d25c50,2026-01-20,Spotify,-11.99,USD,Subscriptions,sofi
 21f65b7e-97da-4081-b357-d21405d25750,2026-01-21,Amazon Prime,-14.99,USD,Subscriptions,sofi
+cc3ce4fa-40f8-4667-87fc-2e163b0957b4,2026-01-22,Urgent Care,-675.0,USD,Healthcare,sofi
 4d5328d0-65e7-422d-9356-44b799a49c59,2026-01-23,Employer Payroll,2500.0,USD,Income,sofi
 f26fe095-ec41-49a3-b027-acc5db6a2b0b,2026-01-24,Grocery Store,-136.0,USD,Groceries,sofi
 2aba2b58-9782-4348-af62-0cbc260176cf,2026-01-25,AMEX Payment,-800.0,USD,Transfer,sofi
+50b7651d-86af-42f6-b264-88a513df0351,2026-01-26,Whole Foods,-47.9,USD,Groceries,sofi
+bf89c590-98c8-4355-aa08-0680adca22f4,2026-01-27,Sweetgreen,-14.32,USD,Dining,sofi
 fd1e131a-f805-4861-b2ea-6a083cb33400,2026-01-29,Gas Station,-28.4,USD,Transportation,sofi
+a84c1834-3ff9-4018-988b-3822efea7731,2026-01-29,Target,-42.41,USD,Shopping,sofi
+665063e1-e931-48e9-ac3e-27d9cdbede4b,2026-01-30,Apple Store,-295.82,USD,Shopping,sofi
+22e1ccaa-801d-4a95-8b88-7c7ead1114f9,2026-01-30,Employer Payroll,2500.0,USD,Income,sofi
 bc2d506d-3e7d-460c-9c35-77ee23e32d0d,2026-01-31,Grocery Store,-138.0,USD,Groceries,sofi
+46a29fa1-2fab-4ed4-a1ff-049af320c6e8,2026-01-31,Starbucks,-5.28,USD,Coffee,sofi

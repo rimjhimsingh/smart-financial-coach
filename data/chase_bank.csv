@@ -1,26 +1,147 @@
 transaction_id,posted_date,merchant,amount,currency,category,account_id
+c0640b41-0bdf-4ba3-b22c-ba1e8aff468a,2025-08-02,Whole Foods,-77.53,USD,Groceries,chase
+a1765a3c-769c-47ed-829b-9c5d26100755,2025-08-03,Amazon,-47.34,USD,Shopping,chase
+e2f7966e-d223-4868-9c30-0bd4a46f04c0,2025-08-04,Costco,-114.11,USD,Groceries,chase
+542b9cc9-30dc-41e6-9d5c-47d7ab9ff746,2025-08-05,Apple Store,-183.13,USD,Shopping,chase
+2ff9382e-642a-476a-b4a6-3c3a1ef6f918,2025-08-05,Gas Utility,-55.0,USD,Utilities,chase
+18e55e74-35ee-42b3-8302-f1244816f5d8,2025-08-06,Chipotle,-14.65,USD,Dining,chase
+324c5739-52ba-496f-8a39-430c549f69f2,2025-08-06,Dropbox,-9.99,USD,Subscriptions,chase
+b8a22f77-2e6f-4f70-b238-987824c58cb5,2025-08-06,Netflix,-15.49,USD,Subscriptions,chase
+60ec4440-b1b3-4c2c-9637-8ab9bd8ca2e1,2025-08-06,Spotify,-11.99,USD,Subscriptions,chase
+d117e774-0dee-4de4-9d5b-810a1428f68d,2025-08-09,Local Restaurant,-39.96,USD,Dining,chase
+dd65299d-6210-44f7-aa9f-3b5ab9e48a36,2025-08-11,Dropbox,-9.99,USD,Subscriptions,chase
+f1419ffc-722b-4547-a012-42cd52fa4525,2025-08-11,Netflix,-15.49,USD,Subscriptions,chase
+4c8412a3-9793-4663-8f75-7fc145fb4a91,2025-08-11,Spotify,-11.99,USD,Subscriptions,chase
+529a5d48-b9c9-41d1-8653-f302ec4b6de4,2025-08-14,Target,-49.87,USD,Shopping,chase
+6073f67e-7a9a-4aad-bdb5-43e5b6c80014,2025-08-16,Trader Joe's,-44.9,USD,Groceries,chase
+e5988b8b-de16-4f85-854b-c7a9048ba3a0,2025-08-20,Dropbox,-9.99,USD,Subscriptions,chase
+e2c4a5a9-8eca-4cd4-9cfd-fee51ebee7cb,2025-08-20,Netflix,-15.49,USD,Subscriptions,chase
+52e2fb52-db23-408a-8f7e-16df743af380,2025-08-20,Spotify,-11.99,USD,Subscriptions,chase
+16bef5f8-6fa8-4782-85d6-f1b41d4a426c,2025-08-22,Sweetgreen,-13.48,USD,Dining,chase
+104dc198-47ea-4666-ad3d-140f51f4f946,2025-08-28,Apple Store,-198.95,USD,Shopping,chase
+c93c2bc5-f1da-4448-8b6c-6f13dd19ce0e,2025-09-02,Best Buy,-179.91,USD,Shopping,chase
+ecae08d4-50e8-4ac4-b70a-d0daca8623e4,2025-09-05,Electric Utility,-165.0,USD,Utilities,chase
+21ca7cd2-9b6d-4f67-966d-3cba68be7d07,2025-09-06,Dropbox,-9.99,USD,Subscriptions,chase
+ca06676d-bbf7-4666-b4a0-da7a5cdcab92,2025-09-06,Netflix,-15.49,USD,Subscriptions,chase
+babc408e-45cd-4c31-a380-40b4ca276881,2025-09-06,Spotify,-11.99,USD,Subscriptions,chase
+7d702bf9-a0fd-433d-8bf4-ad3add1d9591,2025-09-10,Blue Bottle,-7.33,USD,Coffee,chase
+389eaa15-fe16-4a54-b66a-e65c048f9fe7,2025-09-11,Dropbox,-9.99,USD,Subscriptions,chase
+0e6ce5b2-12d1-4bc5-8605-52895a168137,2025-09-11,Netflix,-15.49,USD,Subscriptions,chase
+e5483d56-6a4b-4ed9-92a9-3856093483db,2025-09-11,Spotify,-11.99,USD,Subscriptions,chase
+f0f5bdd0-f336-47ab-bcd7-2a49e55d73e3,2025-09-20,Dropbox,-9.99,USD,Subscriptions,chase
+b72854af-4369-4e11-ba8c-88d1f0b6ec47,2025-09-20,Netflix,-15.49,USD,Subscriptions,chase
+bf50a5d6-0350-4265-825f-f39e21443cd9,2025-09-20,Spotify,-11.99,USD,Subscriptions,chase
+2b40991c-a671-4754-b164-5cb5f2a1ed3e,2025-09-20,Starbucks,-6.86,USD,Coffee,chase
+902dfed6-a351-4820-a0f4-a10543dda905,2025-09-24,MTA,-3.57,USD,Transportation,chase
+6fe29e48-5f42-44cb-821b-3d8d8567e6f1,2025-09-27,MTA,-3.22,USD,Transportation,chase
+9c27925e-0b95-4c59-bb87-55298a28a0c6,2025-09-29,Trader Joe's,-35.59,USD,Groceries,chase
+22723a31-1e03-4cf8-9951-43e1aa3ebb6a,2025-10-01,Target,-46.31,USD,Shopping,chase
+8bd8257f-0ecc-4e2e-a223-70e411fabb2f,2025-10-02,MTA,-3.09,USD,Transportation,chase
+a55cd02b-91a7-40b7-b53c-061bddbeef9c,2025-10-04,Amazon,-37.01,USD,Shopping,chase
+b0f7c434-2f4d-437c-8bc6-b998399b6c1c,2025-10-05,Gas Utility,-55.0,USD,Utilities,chase
+88166dbe-8ce9-4d76-b6ee-262fe25b56b2,2025-10-06,Dropbox,-9.99,USD,Subscriptions,chase
+5f3a9b40-f39a-4b23-9e95-962cbf020afb,2025-10-06,Netflix,-15.49,USD,Subscriptions,chase
+2fa04c0e-8616-4880-9e2d-ecb16b1559e4,2025-10-06,Spotify,-11.99,USD,Subscriptions,chase
+e62ad602-4278-45de-88ba-fbaacac9f8c2,2025-10-09,Uber,-17.92,USD,Transportation,chase
+dc13cfb5-7581-42bb-8ae4-797a90fa7bb2,2025-10-11,Dropbox,-9.99,USD,Subscriptions,chase
+e62af9c8-0ec3-4fed-b834-c4d8ee98a32d,2025-10-11,Netflix,-15.49,USD,Subscriptions,chase
+e501032f-421a-4daf-858b-185b8bfa6383,2025-10-11,Spotify,-11.99,USD,Subscriptions,chase
+9d7dc82b-5204-47d3-8c7f-630e294b1ebb,2025-10-12,Amazon,-28.93,USD,Shopping,chase
+963ce5ce-273d-4690-890d-41e208c3b49d,2025-10-17,DoorDash,-22.1,USD,Dining,chase
+1e6dc3a6-507c-4f9c-9f57-fbc57867be3b,2025-10-18,Blue Bottle,-6.43,USD,Coffee,chase
+7b8ce3b8-b32f-4230-acb1-e1b59dcd1935,2025-10-19,NJ Transit,-5.44,USD,Transportation,chase
+2c09d64c-e975-4bf7-be80-cf33917894a7,2025-10-20,Dropbox,-9.99,USD,Subscriptions,chase
+73c05731-160c-45e9-9cf7-c0fa606942b7,2025-10-20,Netflix,-15.49,USD,Subscriptions,chase
+758a964b-13c9-4152-8195-5117aa09f58d,2025-10-20,Spotify,-11.99,USD,Subscriptions,chase
+dae80530-629c-47f0-a1ce-9b42b2d9fc88,2025-10-21,Blue Bottle,-6.01,USD,Coffee,chase
+1963bc58-98c8-4178-bd7e-5e6cfa8b3c0e,2025-10-23,Trader Joe's,-57.18,USD,Groceries,chase
+e9377d73-64a0-44ad-8b12-f0ba4fc6a0b1,2025-10-25,Amazon,-43.89,USD,Shopping,chase
+bd5e7919-4d80-40eb-bfea-7c729817e702,2025-10-26,Grocery Store,-80.88,USD,Groceries,chase
+290e83a0-1ada-45f0-ab2c-fb9a78aa70e2,2025-10-29,Best Buy,-215.29,USD,Shopping,chase
+8e02fec4-f820-4298-9133-95cd92be1ddc,2025-11-02,DoorDash,-32.03,USD,Dining,chase
+c0e550a8-86ae-4696-bcb7-0b537a202d54,2025-11-03,Apple Store,-227.42,USD,Shopping,chase
 df9566c9-2be3-4daa-9c18-fc3b3042e2dd,2025-11-04,CVS Pharmacy,-24.1,USD,Healthcare,chase
+61093ec2-a291-4813-a58c-dcd9ee0dde9b,2025-11-04,Grocery Store,-78.67,USD,Groceries,chase
+6f4d26fe-3a27-48a5-bb6e-3f5e5e5213b7,2025-11-05,Best Buy,-192.7,USD,Shopping,chase
+d407aa7f-639e-4c7d-8f16-f04fe3447fff,2025-11-05,Gas Utility,-55.0,USD,Utilities,chase
+361755ff-928a-4e08-8fef-f54cada952c9,2025-11-06,Dropbox,-9.99,USD,Subscriptions,chase
+3ee52aa1-4198-4eb7-9c1f-0258bfcdd0f0,2025-11-06,Netflix,-15.49,USD,Subscriptions,chase
+8c2d4ca8-37a3-4914-a338-23d06722ca43,2025-11-06,Spotify,-11.99,USD,Subscriptions,chase
 da0598c7-de4a-4f29-9eda-0963fe9579a7,2025-11-06,The New York Times,-4.0,USD,Subscriptions,chase
+7f077c74-d7ea-4890-9ccb-0332352446d5,2025-11-09,DoorDash,-22.9,USD,Dining,chase
+2de30b3b-4188-46de-94a8-bd66acc848ca,2025-11-10,Amazon,-37.53,USD,Shopping,chase
 3306dd42-5824-49c8-8b70-7ffb9a8fd070,2025-11-11,Canva,-12.99,USD,Subscriptions,chase
+98f7536a-dd17-4537-8d51-f368de567cdb,2025-11-11,Dropbox,-9.99,USD,Subscriptions,chase
+63f1b530-fe08-4ebf-b959-9da06617c54c,2025-11-11,Netflix,-15.49,USD,Subscriptions,chase
+da128efb-64cd-4015-8414-5dd2d1b43ecc,2025-11-11,Spotify,-11.99,USD,Subscriptions,chase
+bd15b3ab-8e09-4724-be5e-82681b0acd0c,2025-11-13,Costco,-140.33,USD,Groceries,chase
 7b819c3c-0b90-479b-af5e-355b444b2be8,2025-11-13,Dunkin,-4.95,USD,Coffee,chase
+a4842f88-3d32-4494-9a40-1550f9e774b4,2025-11-16,Starbucks,-7.08,USD,Coffee,chase
+1f1e5eef-eb80-4f7a-83d0-4e101c217728,2025-11-20,Dropbox,-9.99,USD,Subscriptions,chase
 6b5675b4-09a2-4aa8-b2dc-8cc2c3343257,2025-11-20,Freelance Deposit,900.0,USD,Income,chase
+d297a971-2670-471a-ae39-aa9993afbeed,2025-11-20,Netflix,-15.49,USD,Subscriptions,chase
+51b07bbc-abaa-4177-b4c5-a74d770050a1,2025-11-20,Spotify,-11.99,USD,Subscriptions,chase
+7ab25be5-1adc-463a-9f5c-b21612cfd178,2025-11-22,Chipotle,-11.07,USD,Dining,chase
 8ba96f4a-49da-44aa-96eb-31e51080935c,2025-11-24,Local Restaurant,-38.6,USD,Dining,chase
+f2724a20-5d08-493e-b41c-59b9c030148e,2025-11-25,Apple Store,-272.5,USD,Shopping,chase
 10a9a181-c94d-4b6c-b2b4-0ae9c1fecc08,2025-11-25,Headspace,0.0,USD,Subscriptions,chase
+38e9f4d0-bf39-4d4c-9d22-e0d9f5f3f83b,2025-11-28,Whole Foods,-66.04,USD,Groceries,chase
 cafd86a5-f019-48d2-a05c-1bb6e5451786,2025-12-02,Dunkin,-5.25,USD,Coffee,chase
+b0051b37-55a7-4dd2-8e29-9aa687187de5,2025-12-03,Starbucks,-5.25,USD,Coffee,chase
+6d1cdcf6-f429-4d22-98ef-7be28da40c7e,2025-12-04,Best Buy,-170.27,USD,Shopping,chase
+2b6a93fb-4ddb-4f14-bd64-9aea277749fc,2025-12-05,Electric Utility,-165.0,USD,Utilities,chase
+89a3717b-2c53-456f-b9f9-ce1e674f3a0c,2025-12-06,Dropbox,-9.99,USD,Subscriptions,chase
+1106b02f-9ff4-41bb-878e-5dffe9186cac,2025-12-06,Dunkin,-4.94,USD,Coffee,chase
+8d25fbf3-1039-462a-819f-1758cb37d3f5,2025-12-06,Netflix,-15.49,USD,Subscriptions,chase
+3eb3b042-7fef-4efa-848a-c76f15bd15ae,2025-12-06,Spotify,-11.99,USD,Subscriptions,chase
 ecc27bc1-445a-4bb5-b80c-7716da4c4932,2025-12-06,The New York Times,-4.0,USD,Subscriptions,chase
 35c97fbf-8dd6-4172-a392-3a4c7e116895,2025-12-11,Canva,-12.99,USD,Subscriptions,chase
+3e15bd3f-c215-49e1-bd27-a07a7e8bd136,2025-12-11,Chipotle,-17.13,USD,Dining,chase
+bee6c61d-7a29-4c5d-90aa-a5ab88049626,2025-12-11,Dropbox,-9.99,USD,Subscriptions,chase
+a3fda8cc-6af1-40f1-bfbf-8155a06b6c65,2025-12-11,Netflix,-15.49,USD,Subscriptions,chase
+12150c8e-d127-4212-a51d-b68df868ff55,2025-12-11,Spotify,-11.99,USD,Subscriptions,chase
+5c90c9ee-0957-4faf-86d9-00d82c1bff42,2025-12-15,DoorDash,-30.0,USD,Dining,chase
+43bdcbb2-61d4-4111-ae83-608c1ef1438a,2025-12-16,Grocery Store,-88.75,USD,Groceries,chase
 41832ced-0060-4ad7-aff7-afe19fb4bf21,2025-12-16,Target,-64.8,USD,Shopping,chase
 4b9bb435-a0e6-4dfa-8a0f-ee77fd51334a,2025-12-18,Freelance Deposit,600.0,USD,Income,chase
+2d538657-3e40-45a9-b465-d8cad82cf2bc,2025-12-20,Dropbox,-9.99,USD,Subscriptions,chase
+7a3c600b-4b23-44c3-a13b-962c95c672a8,2025-12-20,Netflix,-15.49,USD,Subscriptions,chase
+3cebe1fb-720b-499d-904e-f320b4126fb4,2025-12-20,Spotify,-11.99,USD,Subscriptions,chase
+b8fd00f9-68d4-4e1a-8fe8-0a04ef54e4f8,2025-12-21,Local Restaurant,-30.46,USD,Dining,chase
+0ace16fa-c6ab-4acb-a739-f13383e825bd,2025-12-22,Uber,-25.43,USD,Transportation,chase
 bba43ee6-1f90-46a4-9feb-06cbf972e037,2025-12-23,Local Restaurant,-52.3,USD,Dining,chase
 4f9527de-15b6-4630-a34d-09fe24324da4,2025-12-25,Headspace,-12.99,USD,Subscriptions,chase
 d42688f4-81e8-4b6d-a3f0-0137a0b10e50,2025-12-30,Transfer to SoFi,-500.0,USD,Transfer,chase
 0d93a6a9-614b-4e3b-8a52-662e5dfa5c70,2026-01-02,Transfer from SoFi,500.0,USD,Transfer,chase
 787f74a0-09c3-4671-a048-189c5236022f,2026-01-04,Dunkin,-6.15,USD,Coffee,chase
+364ec8e0-3f1a-4eb5-a8b6-52fb1eb066dc,2026-01-05,Electric Utility,-165.0,USD,Utilities,chase
+a9ae2ea4-5cf6-43d5-87db-c69c028f7ac7,2026-01-05,Target,-65.02,USD,Shopping,chase
+01406b17-5458-41c1-917e-e150207e5d42,2026-01-06,Dropbox,-9.99,USD,Subscriptions,chase
+c9cbbfaf-ba22-4600-b8f6-4160222b90d7,2026-01-06,Netflix,-15.49,USD,Subscriptions,chase
+1b12ba1d-863d-40b3-b991-c0fb5eb85444,2026-01-06,Spotify,-11.99,USD,Subscriptions,chase
 eb60c2d3-381b-46a9-a681-bcccfedaf805,2026-01-06,The New York Times,-4.0,USD,Subscriptions,chase
 931530b0-e104-4fe7-9630-ee684586a392,2026-01-08,Dunkin,-5.85,USD,Coffee,chase
 ce7404e6-c3b2-497b-a0ef-c26d3fb3adc3,2026-01-11,Canva,-12.99,USD,Subscriptions,chase
+1b6dcdce-4827-4dd4-a10a-a74157f47af8,2026-01-11,Dropbox,-9.99,USD,Subscriptions,chase
+c55c7770-8d19-4873-9599-5359ae6380df,2026-01-11,Netflix,-15.49,USD,Subscriptions,chase
+bac7f132-1a4a-44a8-8514-e535c9f03cca,2026-01-11,Spotify,-11.99,USD,Subscriptions,chase
+da9ea8b2-23e9-4b03-90fb-1dc1116f3126,2026-01-11,Starbucks,-7.43,USD,Coffee,chase
+cb7d9529-dafc-4af6-9aa6-ab16df7c8163,2026-01-12,Best Buy,-1299.0,USD,Shopping,chase
+2792c108-e10f-4882-bdfb-5532a4ad51fc,2026-01-12,Starbucks,-5.11,USD,Coffee,chase
 6229c148-366d-4153-9843-63dc59d9431f,2026-01-12,Target,-112.4,USD,Shopping,chase
+d41967dc-3881-4417-b9db-5c432c33bd10,2026-01-13,Lyft,-20.66,USD,Transportation,chase
+7833544e-04e9-463a-88e6-a7e229ca457d,2026-01-14,Lyft,-23.29,USD,Transportation,chase
+c98a6bc6-7de0-40a6-a535-0ddf4923cbd0,2026-01-16,NJ Transit,-4.97,USD,Transportation,chase
+3eccf5c9-3afc-45ae-a5cb-0e3ed5df7612,2026-01-17,Starbucks,-6.8,USD,Coffee,chase
+c323eb07-e5cd-4ad6-b90a-f1379bd0e840,2026-01-18,Apple Store,-240.1,USD,Shopping,chase
 ef9e4713-7043-4ced-b665-5a0f3b358bca,2026-01-19,Airbnb,-720.0,USD,Travel,chase
+a130f0d0-d5f4-447c-b0cb-e9967d506e98,2026-01-19,Blue Bottle,-7.52,USD,Coffee,chase
+451c0015-5f79-48f2-b74b-fe66071c8522,2026-01-20,Dropbox,-9.99,USD,Subscriptions,chase
 48671be3-570c-44f0-a5eb-5062542cdb81,2026-01-20,Local Restaurant,-61.75,USD,Dining,chase
+05e99255-e69d-4083-be6f-35f85135004f,2026-01-20,Netflix,-15.49,USD,Subscriptions,chase
+f80f6456-4238-4af3-84c2-4b29bad7dc81,2026-01-20,Spotify,-11.99,USD,Subscriptions,chase
+aff04846-146a-45c8-a1e8-d4cfffcf069a,2026-01-21,Chipotle,-10.51,USD,Dining,chase
+03dc7071-5846-422e-b09d-1fa40ba4e146,2026-01-22,Local Restaurant,-48.45,USD,Dining,chase
 38aa0fee-145e-4c8c-b7b9-cade8bcfa7b5,2026-01-25,Headspace,-12.99,USD,Subscriptions,chase
 98d7a8d5-b5c5-4fd0-8c61-c1a203b098ff,2026-01-27,Freelance Deposit,1200.0,USD,Income,chase
+f0d4255d-ae69-454b-bbc1-bad11ec394c9,2026-01-29,Furniture Store,-1100.0,USD,Shopping,chase

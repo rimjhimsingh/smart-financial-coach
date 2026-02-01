@@ -83,27 +83,59 @@ export default function CopilotWidget() {
 
   return (
     <>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-50 h-12 w-12 rounded-full bg-slate-200 text-slate-950 shadow-lg hover:bg-white"
-        title="Copilot"
-      >
-        AI
-      </button>
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className={
+            "group relative grid h-14 w-14 place-items-center rounded-2xl " +
+            "border border-slate-700/60 bg-slate-950/40 shadow-lg backdrop-blur " +
+            "transition active:scale-[0.98] " +
+            (open ? "ring-2 ring-cyan-400/50" : "hover:ring-2 hover:ring-cyan-400/35")
+          }
+          title="Copilot"
+          aria-label="Open Copilot"
+        >
+          <span className="pointer-events-none absolute -inset-1 rounded-2xl opacity-0 blur-xl transition group-hover:opacity-100">
+            <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/60 via-cyan-400/40 to-blue-600/60" />
+          </span>
+
+          <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 opacity-90" />
+          <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-white/20 to-transparent opacity-50" />
+
+          <span className="relative grid place-items-center">
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-slate-950/35 ring-1 ring-white/10">
+              <span className="text-sm font-extrabold tracking-tight text-white">AI</span>
+            </span>
+          </span>
+        </button>
+      </div>
 
       {open ? (
-        <div className="fixed bottom-20 right-5 z-50 w-[360px] max-w-[92vw] overflow-hidden rounded-2xl border border-slate-800 bg-slate-950 shadow-xl">
-          <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-            <div>
-              <div className="text-sm font-extrabold text-white">Fiscal Copilot</div>
-              <div className="text-xs text-slate-400">Personalized insights from your data</div>
+        <div className="fixed bottom-24 right-6 z-50 w-[380px] max-w-[92vw] overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-950/90 shadow-2xl backdrop-blur">
+          <div className="relative border-b border-slate-800/80 px-4 py-3">
+            <div className="pointer-events-none absolute inset-0 opacity-80">
+              <div className="absolute -top-20 -right-24 h-44 w-44 rounded-full bg-cyan-500/10 blur-2xl" />
+              <div className="absolute -bottom-24 -left-24 h-52 w-52 rounded-full bg-blue-500/10 blur-2xl" />
             </div>
-            <button
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-2 py-1 text-sm text-slate-300 hover:bg-slate-900"
-            >
-              Close
-            </button>
+
+            <div className="relative flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-2xl border border-slate-700/60 bg-slate-950/40">
+                  <div className="h-7 w-7 rounded-xl bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600" />
+                </div>
+                <div>
+                  <div className="text-sm font-extrabold text-white">Fiscal Copilot</div>
+                  <div className="text-xs text-slate-400">Personalized insights from your data</div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setOpen(false)}
+                className="rounded-xl border border-slate-800/80 bg-slate-950/40 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-slate-900/60"
+              >
+                Close
+              </button>
+            </div>
           </div>
 
           <div ref={listRef} className="h-80 space-y-3 overflow-y-auto px-3 py-3">
@@ -113,7 +145,7 @@ export default function CopilotWidget() {
             {loading ? <div className="text-xs text-slate-500">Thinking...</div> : null}
           </div>
 
-          <div className="border-t border-slate-800 p-3">
+          <div className="border-t border-slate-800/80 p-3">
             <div className="flex gap-2">
               <input
                 value={input}
@@ -122,12 +154,13 @@ export default function CopilotWidget() {
                   if (e.key === "Enter") send();
                 }}
                 placeholder="Ask about spending, subscriptions, goals"
-                className="w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500"
+                className="w-full rounded-xl border border-slate-800 bg-slate-900/70 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500"
               />
+
               <button
                 onClick={send}
                 disabled={loading}
-                className="rounded-xl bg-slate-200 px-3 py-2 text-sm font-semibold text-slate-950 hover:bg-white disabled:opacity-60"
+                className="rounded-xl bg-gradient-to-br from-blue-500 via-cyan-400 to-blue-600 px-4 py-2 text-sm font-extrabold text-slate-950 shadow-lg hover:brightness-110 disabled:opacity-60"
               >
                 Send
               </button>
@@ -142,7 +175,7 @@ export default function CopilotWidget() {
                 <button
                   key={q}
                   onClick={() => setInput(q)}
-                  className="rounded-full border border-slate-800 bg-slate-950 px-3 py-1 text-xs text-slate-300 hover:bg-slate-900"
+                  className="rounded-full border border-slate-800 bg-slate-950/40 px-3 py-1 text-xs text-slate-300 hover:bg-slate-900/60"
                 >
                   {q}
                 </button>

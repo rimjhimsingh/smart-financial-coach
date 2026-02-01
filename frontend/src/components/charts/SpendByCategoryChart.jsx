@@ -14,22 +14,17 @@ function MoneyTooltip({ active, payload, label }) {
 }
 
 export default function SpendByCategoryChart({ data, onSelectCategory }) {
-  const safe = (data || []).map((d) => ({ ...d, value: Number(d.value || 0) }));
+  const safe = (data || []).map((d) => ({
+    ...d,
+    value: Number(d.value || 0),
+  }));
 
   return (
     <div className="h-72 w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={safe}
-          margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
-          onClick={(state) => {
-            const idx = state?.activeTooltipIndex;
-            const row = typeof idx === "number" ? safe[idx] : null;
-            if (row?.category && onSelectCategory) onSelectCategory(row.category);
-          }}
-        >
+        <BarChart data={safe} margin={{ top: 8, right: 12, left: 0, bottom: 8 }}>
           <CartesianGrid stroke="rgba(148,163,184,0.25)" strokeDasharray="3 3" />
-            <XAxis
+          <XAxis
             dataKey="category"
             tick={{ fontSize: 12, fill: "rgba(226,232,240,0.85)" }}
             axisLine={{ stroke: "rgba(148,163,184,0.25)" }}
@@ -37,22 +32,29 @@ export default function SpendByCategoryChart({ data, onSelectCategory }) {
             interval={0}
             angle={-18}
             height={55}
-            />
-            <YAxis
+          />
+          <YAxis
             tick={{ fontSize: 12, fill: "rgba(226,232,240,0.85)" }}
             axisLine={{ stroke: "rgba(148,163,184,0.25)" }}
             tickLine={{ stroke: "rgba(148,163,184,0.25)" }}
             tickFormatter={(v) => `$${Math.round(v)}`}
-            />
-            <Tooltip content={<MoneyTooltip />} cursor={{ fill: "rgba(148,163,184,0.10)" }} />
-            <Bar dataKey="value" fill="rgba(255,255,255,0.92)" radius={[10, 10, 0, 0]} />
-
+          />
+          <Tooltip content={<MoneyTooltip />} cursor={{ fill: "rgba(148,163,184,0.10)" }} />
+          <Bar
+            dataKey="value"
+            fill="rgba(255,255,255,0.92)"
+            radius={[10, 10, 0, 0]}
+            style={{ cursor: "pointer" }}
+            onClick={(_, idx) => {
+              const row = typeof idx === "number" ? safe[idx] : null;
+              const category = row?.category;
+              if (category && onSelectCategory) onSelectCategory(category);
+            }}
+          />
         </BarChart>
       </ResponsiveContainer>
 
-      <div className="mt-2 text-xs text-slate-400">
-        Tip: click a bar to open category drilldown
-      </div>
+      
     </div>
   );
 }

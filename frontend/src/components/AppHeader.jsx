@@ -55,7 +55,7 @@ export default function AppHeader() {
             Smart Financial Coach
           </div>
           <div className="text-xs text-slate-400">
-            Executive overview and savings insights
+            Own Your Wealth
           </div>
         </div>
       </div>
