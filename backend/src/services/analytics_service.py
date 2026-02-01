@@ -314,23 +314,116 @@ def get_monthly_deltas(
     }
 
 def get_anomalies(days: int = 30, limit: int = 10) -> dict:
+    """
+    Simple, demo-reliable anomaly logic
+
+    Flags ONLY outgoing charges (amount < 0) where abs(amount) > 500 and either:
+      1) First time we've ever seen this merchant, OR
+      2) Merchant reappears after a long gap (default 60+ days)
+
+    BUT it will NOT flag merchants that look monthly recurring:
+      - at least 3 occurrences total
+      - median gap between charges is roughly monthly (20 to 45 days)
+
+    If days <= 0, it will consider all time.
+    """
     df = STORE.transactions
     if df.empty:
         return {"days": days, "anomalies": []}
 
-    today = _today_from_data(df)
-    start = today - pd.Timedelta(days=days)
-    dff = df[df["posted_date"] >= start].copy()
+    dff = df.copy()
 
-    # Demo rule: large absolute amounts
+    # Make dates safe
+    dff["posted_date"] = pd.to_datetime(dff.get("posted_date"), errors="coerce")
+    dff = dff.dropna(subset=["posted_date", "merchant", "amount"])
+
+    # Only outgoing, never income
+    dff = dff[dff["amount"] < 0].copy()
+    if dff.empty:
+        return {"days": days, "anomalies": []}
+
+    # Optional time window
+    if days and int(days) > 0:
+        today = dff["posted_date"].max()
+        if pd.isna(today):
+            return {"days": days, "anomalies": []}
+        start = today - pd.Timedelta(days=int(days))
+        dff = dff[dff["posted_date"] >= start].copy()
+
+    if dff.empty:
+        return {"days": days, "anomalies": []}
+
     dff["abs_amount"] = dff["amount"].abs()
-    flagged = dff[dff["abs_amount"] > 500].sort_values("abs_amount", ascending=False)
 
-    rows = flagged.drop(columns=["abs_amount"]).head(limit).to_dict(orient="records")
-    out = _serialize_transactions(rows)
+    # Sort for history features
+    dff = dff.sort_values(["merchant", "posted_date"]).copy()
 
-    # Attach a reason for UI
-    for r in out:
-        r["reason"] = "Large transaction (demo threshold > 500)"
+    # Merchant occurrence index (0 means first ever in the dataset window)
+    dff["occ_idx"] = dff.groupby("merchant").cumcount()
 
-    return {"days": days, "anomalies": out}
+    # Gap since previous charge for same merchant
+    dff["prev_date"] = dff.groupby("merchant")["posted_date"].shift(1)
+    dff["gap_days"] = (dff["posted_date"] - dff["prev_date"]).dt.days
+
+    # Detect "monthly recurring" merchants using historical cadence
+    gaps = dff.dropna(subset=["gap_days"]).copy()
+    median_gap = gaps.groupby("merchant")["gap_days"].median()
+    merchant_count = dff.groupby("merchant")["merchant"].size()
+
+    def is_monthly_recurring(merchant: str) -> bool:
+        cnt = int(merchant_count.get(merchant, 0))
+        mg = median_gap.get(merchant, None)
+        if cnt < 3 or mg is None or pd.isna(mg):
+            return False
+        mg = float(mg)
+        return 20.0 <= mg <= 45.0
+
+    # Candidates: large outgoing charges
+    candidates = dff[dff["abs_amount"] > 500].copy()
+    if candidates.empty:
+        return {"days": days, "anomalies": []}
+
+    anomalies = []
+    LONG_GAP_DAYS = 60
+
+    for _, r in candidates.iterrows():
+        merchant = str(r.get("merchant") or "").strip()
+        if not merchant:
+            continue
+
+        # Skip recurring monthly merchants (rent-like)
+        if is_monthly_recurring(merchant):
+            continue
+
+        first_time = int(r.get("occ_idx", 0)) == 0
+
+        gap = r.get("gap_days")
+        gap_days = int(gap) if pd.notna(gap) else None
+        long_gap = (gap_days is not None) and (gap_days >= LONG_GAP_DAYS)
+
+        if not (first_time or long_gap):
+            continue
+
+        row = r.drop(labels=["abs_amount", "occ_idx", "prev_date", "gap_days"]).to_dict()
+
+        if first_time:
+            row["reason"] = "First time large outgoing charge for this merchant"
+        else:
+            row["reason"] = f"Large outgoing charge after {gap_days} day gap"
+
+        anomalies.append(row)
+
+    if not anomalies:
+        return {"days": days, "anomalies": []}
+
+    out_df = pd.DataFrame(anomalies)
+    out_df["posted_date"] = pd.to_datetime(out_df["posted_date"], errors="coerce")
+    out_df = out_df.dropna(subset=["posted_date"])
+
+    # Sort newest first, then largest
+    out_df["abs_sort"] = out_df["amount"].abs()
+    out_df = out_df.sort_values(["posted_date", "abs_sort"], ascending=[False, False]).drop(columns=["abs_sort"])
+
+    rows = out_df.head(int(limit)).to_dict(orient="records")
+    return {"days": days, "anomalies": _serialize_transactions(rows)}
+
