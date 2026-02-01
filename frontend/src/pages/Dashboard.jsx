@@ -34,6 +34,7 @@ import MoneyInOutChart from "../components/charts/MoneyInOutChart";
 import DailySpendTrendChart from "../components/charts/DailySpendTrendChart";
 import InsightCards from "../components/InsightCards";
 import SpendByCategoryPieChart from "../components/charts/SpendByCategoryPieChart";
+import SavingsGoalCard from "../components/SavingsGoalCard";
 
 
 function Card({ title, value, subtext }) {
@@ -306,6 +307,10 @@ export default function Dashboard() {
             ) : (
               <div className="text-sm text-slate-400">Load demo data to generate your financial snapshot.</div>
             )}
+          </SectionShell>
+
+          <SectionShell title="Savings goal">
+            <SavingsGoalCard />
           </SectionShell>
 
 
