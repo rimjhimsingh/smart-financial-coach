@@ -1,10 +1,19 @@
-# backend/src/routes/copilot.py
+"""
+Copilot Routes
+--------------
+Provides AI powered chat and insight card generation using Gemini with caching and safe JSON parsing.
+"""
+
+from __future__ import annotations
+
 import json
 import time
+from typing import Any, Dict, Optional
+
 from flask import Blueprint, jsonify, request
 
-from ..services.store import STORE
 from ..services.gemini_client import get_gemini_client
+from ..services.store import STORE
 
 try:
     from google.genai.errors import ClientError
@@ -13,62 +22,92 @@ except Exception:
 
 copilot_bp = Blueprint("copilot", __name__)
 
-# Cache (prevents repeated Gemini calls when the dashboard re-renders)
-_INSIGHTS_CACHE = {}  # key -> {"ts": float, "data": dict}
+_INSIGHTS_CACHE: Dict[str, Dict[str, Any]] = {}
 _CACHE_TTL_SEC = 180
+_MAX_ROWS_DEFAULT = 300
+_MAX_ROWS_LIMIT = 1000
 
-def _cache_get(key: str):
+
+def _clamp_max_rows(value: Any) -> int:
+    """Parse and clamp max_rows to a safe integer range."""
+    try:
+        n = int(value)
+    except Exception:
+        n = _MAX_ROWS_DEFAULT
+    if n < 1:
+        return 1
+    if n > _MAX_ROWS_LIMIT:
+        return _MAX_ROWS_LIMIT
+    return n
+
+
+def _cache_get(key: str) -> Optional[Dict[str, Any]]:
+    """Return cached data if present and not expired."""
     item = _INSIGHTS_CACHE.get(key)
     if not item:
         return None
-    if (time.time() - item["ts"]) > _CACHE_TTL_SEC:
+    if (time.time() - float(item.get("ts", 0.0))) > _CACHE_TTL_SEC:
         _INSIGHTS_CACHE.pop(key, None)
         return None
-    return item["data"]
+    data = item.get("data")
+    if isinstance(data, dict):
+        return data
+    return None
 
-def _cache_set(key: str, data: dict):
+
+def _cache_set(key: str, data: Dict[str, Any]) -> None:
+    """Store data in cache with current timestamp."""
     _INSIGHTS_CACHE[key] = {"ts": time.time(), "data": data}
 
-def _safe_json(text: str):
-    text = (text or "").strip()
 
-    # handle accidental markdown fences
-    if text.startswith("```"):
-        text = text.strip("`").strip()
-        if text.lower().startswith("json"):
-            text = text[4:].strip()
+def _strip_markdown_fences(text: str) -> str:
+    """Remove accidental markdown code fences from model output."""
+    t = (text or "").strip()
+    if not t.startswith("```"):
+        return t
+    t = t.strip()
+    t = t.strip("`").strip()
+    if t.lower().startswith("json"):
+        t = t[4:].strip()
+    return t
 
-    # 1) Try normal parse first
+
+def _safe_json(text: str) -> Any:
+    """Parse JSON from model output, tolerating minor formatting noise."""
+    cleaned = _strip_markdown_fences(text)
+
     try:
-        return json.loads(text)
+        return json.loads(cleaned)
     except Exception:
         pass
 
-    # 2) Parse first JSON value and ignore trailing junk
     try:
         decoder = json.JSONDecoder()
-        obj, _idx = decoder.raw_decode(text)
+        obj, _idx = decoder.raw_decode(cleaned)
         return obj
     except Exception:
         pass
 
-    # 3) Fallback: grab the first object boundaries and parse
-    start = text.find("{")
-    end = text.rfind("}")
+    start = cleaned.find("{")
+    end = cleaned.rfind("}")
     if start != -1 and end != -1 and end > start:
-        snippet = text[start : end + 1]
-        decoder = json.JSONDecoder()
-        obj, _idx = decoder.raw_decode(snippet)
-        return obj
+        snippet = cleaned[start : end + 1]
+        try:
+            decoder = json.JSONDecoder()
+            obj, _idx = decoder.raw_decode(snippet)
+            return obj
+        except Exception:
+            pass
 
-    raise json.JSONDecodeError("Could not parse JSON", text, 0)
+    raise json.JSONDecodeError("Could not parse JSON", cleaned, 0)
 
 
 @copilot_bp.post("/copilot/chat")
 def copilot_chat():
-    body = request.get_json(force=True) or {}
+    """Answer a user question using recent transactions and return strict JSON."""
+    body = request.get_json(silent=True) or {}
     message = (body.get("message") or "").strip()
-    max_rows = int(body.get("max_rows", 300))
+    max_rows = _clamp_max_rows(body.get("max_rows", _MAX_ROWS_DEFAULT))
 
     if not message:
         return jsonify({"error": "message is required"}), 400
@@ -97,9 +136,9 @@ def copilot_chat():
     try:
         client = get_gemini_client()
         resp = client.models.generate_content(
-        model="gemini-2.5-flash-lite", 
-        contents=system_text + "\n\n" + json.dumps(prompt, default=str),
-    )
+            model="gemini-2.5-flash-lite",
+            contents=system_text + "\n\n" + json.dumps(prompt, default=str),
+        )
         payload = _safe_json(resp.text or "")
         return jsonify(payload), 200
 
@@ -109,30 +148,36 @@ def copilot_chat():
             msg = str(e)
         except Exception:
             msg = "Gemini error"
+
         if status == 429 or "RESOURCE_EXHAUSTED" in msg:
-            return jsonify(
-                {
-                    "answer": "AI is temporarily rate limited. Please retry shortly.",
-                    "bullets": [],
-                    "followups": [],
-                    "meta": {"ai_status": "rate_limited"},
-                }
-            ), 200
+            return (
+                jsonify(
+                    {
+                        "answer": "AI is temporarily rate limited. Please retry shortly.",
+                        "bullets": [],
+                        "followups": [],
+                        "meta": {"ai_status": "rate_limited"},
+                    }
+                ),
+                200,
+            )
+
         return jsonify({"error": "Gemini request failed", "details": msg}), 200
 
     except Exception as e:
         return jsonify({"error": "Copilot failed", "details": str(e)}), 200
 
+
 @copilot_bp.get("/copilot/insights")
 def copilot_insights():
-    month = request.args.get("month") or ""
-    max_rows = int(request.args.get("max_rows", 300))
+    """Generate 5 insight cards for a given month, using caching to reduce repeated calls."""
+    month = (request.args.get("month") or "").strip()
+    max_rows = _clamp_max_rows(request.args.get("max_rows", _MAX_ROWS_DEFAULT))
 
     df = STORE.transactions
     if df is None or df.empty:
         return jsonify({"cards": [], "meta": {"ai_status": "no_data"}}), 200
 
-    # Filter to requested month if possible
     if month and "posted_date" in df.columns:
         try:
             df2 = df[df["posted_date"].astype(str).str.startswith(month)]
@@ -185,12 +230,12 @@ def copilot_insights():
     try:
         client = get_gemini_client()
         resp = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
-        contents=system_text + "\n\n" + json.dumps(prompt, default=str),
-    )
+            model="gemini-2.5-flash-lite",
+            contents=system_text + "\n\n" + json.dumps(prompt, default=str),
+        )
 
         payload = _safe_json(resp.text or "")
-        cards = payload.get("cards", [])
+        cards = payload.get("cards", []) if isinstance(payload, dict) else []
         if not isinstance(cards, list):
             cards = []
 
@@ -205,7 +250,6 @@ def copilot_insights():
         except Exception:
             msg = "Gemini error"
 
-        # If rate-limited, return cached if any previous month cache exists, else return empty safely
         if status == 429 or "RESOURCE_EXHAUSTED" in msg:
             out = {
                 "cards": [],

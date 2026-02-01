@@ -1,3 +1,21 @@
+"""
+Analytics Service
+-----------------
+This module contains the backend analytics logic used by the dashboard endpoints.
+
+It reads the in memory transactions dataset from STORE and computes:
+- KPI summary metrics for the current month to date (spend, net cashflow, recurring totals),
+  plus a simple anomaly count and a top spend driver category based on month over month change.
+- Chart datasets for the dashboard (spend by category for a selected month, money in vs money out
+  per month, and daily spend trend for a selected month).
+- Drilldowns for a selected month and category (top merchants and top transactions).
+- Month over month deltas (top category increases and the merchants driving those increases).
+- Basic anomaly detection using a demo rule (large absolute transaction amounts) over a recent window.
+
+Helper functions handle month resolution, available month discovery, date serialization for JSON,
+and selecting a demo friendly "today" based on the max posted_date in the dataset.
+"""
+
 import pandas as pd
 from typing import Optional
 

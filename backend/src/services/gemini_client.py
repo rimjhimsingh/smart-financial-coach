@@ -1,3 +1,16 @@
+"""
+Gemini Client Factory
+--------------------
+This module provides a single, centralized way to create a Gemini API client.
+
+Purpose:
+- Reads the Gemini API key from environment variables.
+- Ensures the application fails fast with a clear error if the key is missing.
+- Returns a configured google.genai.Client instance for use by AI services.
+
+This abstraction keeps API key handling out of route and service logic and makes
+it easy to swap configuration or extend client setup in the future.
+"""
 import os
 from google import genai
 

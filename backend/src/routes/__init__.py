@@ -1,9 +1,18 @@
+"""
+API Blueprint Aggregator
+------------------------
+Combines all route blueprints under a single API blueprint.
+"""
+from __future__ import annotations
+
 from flask import Blueprint
-from .main import main_bp
-from .dashboard import dashboard_bp
-from .subscriptions import subscriptions_bp
+
 from .copilot import copilot_bp
-api_bp = Blueprint("api", __name__, url_prefix="/api")
+from .dashboard import dashboard_bp
+from .main import main_bp
+from .subscriptions import subscriptions_bp
+
+api_bp = Blueprint("api", __name__)
 
 api_bp.register_blueprint(main_bp)
 api_bp.register_blueprint(dashboard_bp)

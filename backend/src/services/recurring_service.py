@@ -1,3 +1,23 @@
+"""
+Recurring Detection Service
+---------------------------
+This module detects recurring charges by analyzing transaction history grouped by merchant.
+
+It provides:
+- detect_recurring_by_merchant: Scans transactions in STORE, groups by merchant, infers cadence
+  (weekly, biweekly, monthly, annual) from the median gap between charges, computes average charge,
+  annualized cost, confidence, and flags like trial to paid conversion and likely price increases.
+
+How it works at a high level:
+- Normalizes posted_date to datetime and filters to debit like rows (negative amounts) with an option
+  to include zero dollar trials.
+- For each merchant, computes day gaps between charge dates and matches them to cadence rules with
+  tolerances.
+- Computes subscription metrics (average amount, last charged date, occurrences, annualized cost).
+- Applies heuristics to flag trial to paid patterns and detect strict price increases only on stable,
+  subscription like series.
+- Produces a sorted list of recurring candidates ordered by annualized cost for prioritization.
+"""
 from typing import List, Dict, Any, Optional
 import pandas as pd
 import numpy as np
