@@ -1,3 +1,19 @@
+/**
+ * Daily Spend Trend Chart
+ * -----------------------
+ * This module renders a responsive line chart for daily spending over a recent window.
+ *
+ * What it renders:
+ * - A Recharts LineChart showing spend per day.
+ * - A custom tooltip that formats spend using the shared fmtMoney helper.
+ * - A small empty state message when no data is available.
+ *
+ * How it works:
+ * - Accepts a data array of objects shaped like { day: string, spend: number }.
+ * - Slices to the last maxPoints entries to keep the chart readable.
+ * - Uses Recharts components (ResponsiveContainer, LineChart, XAxis, YAxis, Tooltip, Line).
+ */
+
 import React from "react";
 import {
   ResponsiveContainer,

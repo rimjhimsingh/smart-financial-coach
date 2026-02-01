@@ -1,3 +1,30 @@
+/**
+ * Dashboard Page
+ * --------------
+ * This module implements the main executive dashboard screen.
+ *
+ * What it renders:
+ * - A top level status and controls area, including backend health status, a demo data seed button,
+ *   and a month selector once data is available.
+ * - KPI summary cards and a financial health snapshot derived from the analytics API.
+ * - AI generated insight cards via InsightCards, with drilldown actions to categories and subscriptions.
+ * - Analytics charts for spending and cashflow trends:
+ *   - Spend by category (bar) with click to drill into category details.
+ *   - Money in vs money out by month.
+ *   - Spend mix by category (pie).
+ *   - Daily spend trend for the selected month.
+ * - Category drilldown panel showing top merchants and top transactions for the selected category.
+ * - Anomaly preview list for recent flagged transactions.
+ *
+ * How it works:
+ * - Uses dashboardApi to call backend endpoints for health, stats, KPI summary, charts, deltas,
+ *   anomalies, and category breakdown.
+ * - Manages local UI state for selected month, selected category, loading states, and error state.
+ * - refreshAll loads baseline data and then triggers month scoped insights (deltas and anomalies).
+ * - Selecting a category triggers a drilldown fetch to populate merchant and transaction details.
+ */
+
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dashboardApi } from "../api/dashboardApi";

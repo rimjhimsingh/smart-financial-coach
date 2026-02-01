@@ -1,3 +1,22 @@
+/**
+ * Copilot Widget
+ * --------------
+ * This module implements the persistent chat style AI assistant shown as a floating widget.
+ *
+ * What it renders:
+ * - A floating toggle button anchored to the bottom right of the screen.
+ * - A chat panel when open, including message history, a loading indicator, and an input box.
+ * - Quick question chips that prefill the input with common prompts.
+ *
+ * How it works:
+ * - postChat sends the user message to the backend /api/copilot/chat endpoint and expects a JSON
+ *   response containing answer, bullets, and followups.
+ * - The component maintains local state for open/closed UI, current input, loading state, and
+ *   the chat transcript.
+ * - When the panel opens or messages update, it auto scrolls to the latest message.
+ * - send appends the user message, calls the API, and then appends the assistant response and
+ *   optional follow up suggestions into the transcript.
+ */
 import { useEffect, useRef, useState } from "react";
 
 async function postChat(message) {

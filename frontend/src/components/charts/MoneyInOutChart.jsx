@@ -1,3 +1,22 @@
+/**
+ * Money In vs Money Out Chart
+ * ---------------------------
+ * This module renders a responsive composed chart that compares monthly money in, money out,
+ * and net cashflow.
+ *
+ * What it renders:
+ * - A Recharts ComposedChart with:
+ *   - Bars for money_in and money_out
+ *   - A line for net
+ * - A custom tooltip that formats values using fmtMoney.
+ * - A small empty state message when no data is provided.
+ *
+ * How it works:
+ * - Accepts a data array of objects shaped like:
+ *   { month: string, money_in: number, money_out: number, net: number }.
+ * - Uses standard Recharts primitives (ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip).
+ */ 
+
 import React from "react";
 import {
   ResponsiveContainer,

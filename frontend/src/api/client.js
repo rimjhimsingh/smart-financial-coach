@@ -1,3 +1,19 @@
+/**
+ * API Client
+ * ----------
+ * This module provides a small fetch wrapper for making JSON HTTP requests to the backend.
+ *
+ * What it does:
+ * - Uses a configurable API base URL and appends request paths to it.
+ * - Sends JSON by default and merges any caller provided headers.
+ * - Parses responses as JSON when possible, otherwise returns raw text.
+ * - Throws an Error for non 2xx responses with a helpful message when the server provides one.
+ *
+ * Exports:
+ * - api.get: Performs a GET request for a given path.
+ * - api.post: Performs a POST request for a given path with an optional JSON body.
+ */
+
 const API_BASE = process.env.REACT_APP_API_BASE_URL;
 
 async function request(path, options = {}) {

@@ -1,3 +1,27 @@
+/**
+ * Insight Cards
+ * -------------
+ * This module renders the AI generated insight cards for a selected month and provides an
+ * interactive details workflow.
+ *
+ * What it renders:
+ * - A grid of up to 5 insight cards, each showing title, metric, rationale, and a recommended action.
+ * - A modal that opens when a card is selected, showing:
+ *   - A structured summary of the selected insight.
+ *   - An AI deep dive expansion (generated via copilot chat) with a regenerate option.
+ *   - Contextual drilldowns based on the card's drilldown field:
+ *     - Category drilldown: top merchants and transactions for the category.
+ *     - Subscriptions drilldown: prioritized cancel candidates sorted by annualized cost.
+ *
+ * How it works:
+ * - Fetches monthly insight cards from dashboardApi.copilotInsights and surfaces ai_status and message
+ *   metadata for rate limit or error states.
+ * - Uses local state for cards, modal state, active selection, and separate loading states for deep dive
+ *   generation and drilldown data fetches.
+ * - openDetails triggers both deep dive generation and drilldown fetching in parallel.
+ * - onDrilldown is an optional callback used to highlight related views elsewhere in the UI.
+ */
+
 import { useEffect, useMemo, useState } from "react";
 import { dashboardApi } from "../api/dashboardApi";
 import Modal from "./Modal";

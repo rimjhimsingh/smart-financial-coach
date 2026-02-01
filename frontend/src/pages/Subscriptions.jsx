@@ -1,3 +1,21 @@
+/**
+ * Subscriptions Page
+ * ------------------
+ * This module renders the recurring charges view that helps users identify subscriptions and gray charges.
+ *
+ * What it renders:
+ * - A page header with a refresh action.
+ * - Filter controls to narrow results by merchant name, cadence type, and minimum confidence.
+ * - A results table showing merchant, cadence, average charge, annualized cost, confidence score,
+ *   and flags such as trial to paid and price increase.
+ *
+ * How it works:
+ * - Fetches recurring merchant detections from the backend via dashboardApi.subscriptions.
+ * - Stores results in component state and derives a filtered list using useMemo to keep rendering fast.
+ * - Provides a small Badge component for consistent flag styling and a local fmtMoney helper for display.
+ */
+
+
 import { useEffect, useMemo, useState } from "react";
 import { dashboardApi } from "../api/dashboardApi";
 

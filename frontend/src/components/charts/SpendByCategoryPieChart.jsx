@@ -1,3 +1,22 @@
+/**
+ * Spend By Category Pie Chart
+ * ---------------------------
+ * This module renders a responsive donut style pie chart that visualizes spending distribution
+ * across categories for a selected month.
+ *
+ * What it renders:
+ * - A Recharts PieChart with a donut style Pie (innerRadius and outerRadius).
+ * - A custom tooltip that formats the hovered slice value using fmtMoney.
+ * - A legend listing categories for quick scanning.
+ * - A small empty state message when no positive category spend is available.
+ *
+ * How it works:
+ * - Accepts data shaped like { category: string, value: number } and maps it to Recharts expected
+ *   shape { name: string, value: number }.
+ * - Filters out non positive values to avoid rendering noise.
+ * - Applies a consistent grayscale palette to match the app chart styling.
+ */
+
 import React from "react";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { fmtMoney } from "../../utils/format";

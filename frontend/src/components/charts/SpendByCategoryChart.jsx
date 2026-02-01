@@ -1,3 +1,17 @@
+
+/**
+ * Spend By Category Chart
+ * -----------------------
+ * This module renders a responsive bar chart showing spending totals by category for a given month.
+ *
+ * What it renders:
+ * - A Recharts BarChart with category labels on the X axis and spend values on the Y axis.
+ * - A custom tooltip that formats the bar value using fmtMoney.
+ *
+ * How it works:
+ * - Accepts data shaped like { category: string, value: number } and coerces value to a number.
+ * - Supports interactive drilldown by calling onSelectCategory with the clicked category.
+ */ 
 import React from "react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { fmtMoney } from "../../utils/format";

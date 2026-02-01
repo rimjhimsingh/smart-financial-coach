@@ -1,3 +1,21 @@
+/**
+ * Dashboard API
+ * -------------
+ * This module defines a typed, purpose specific wrapper around the generic api client for the
+ * dashboard related backend endpoints.
+ *
+ * What it does:
+ * - Exposes functions for each backend route used by the UI, keeping fetch details and query string
+ *   construction out of page and component code.
+ * - Standardizes parameter handling and default values for endpoints that accept query params.
+ *
+ * Endpoints covered:
+ * - Health and demo data: health, seed, stats.
+ * - Dashboard analytics: summary, charts, categoryBreakdown, monthlyDeltas, anomalies.
+ * - Recurring spend: subscriptions.
+ * - AI features: copilotInsights and copilotChat.
+ */
+
 import { api } from "./client";
 
 export const dashboardApi = {

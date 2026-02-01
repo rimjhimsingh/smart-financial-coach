@@ -1,3 +1,19 @@
+/**
+ * Modal Component
+ * ---------------
+ * This module provides a reusable modal dialog used to display focused content on top of the app.
+ *
+ * What it does:
+ * - Conditionally renders an overlay and centered dialog when open is true.
+ * - Closes on Escape key press and when the user clicks the backdrop outside the dialog.
+ * - Locks background scrolling while the modal is open and restores the previous overflow style on close.
+ *
+ * Props:
+ * - open: Controls whether the modal is visible.
+ * - title: Optional dialog title displayed in the header.
+ * - onClose: Callback invoked when the modal requests to close.
+ * - children: Modal body content.
+ */
 import { useEffect } from "react";
 
 export default function Modal({ open, title, onClose, children }) {
