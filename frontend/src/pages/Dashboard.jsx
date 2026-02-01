@@ -201,10 +201,7 @@ export default function Dashboard() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="text-2xl font-extrabold tracking-tight">Executive Dashboard</div>
-          <div className="mt-1 flex items-center gap-3 text-sm text-slate-400">
-            <span>Backend</span>
-            {statusPill}
-          </div>
+          
         </div>
 
         <div className="flex items-center gap-3">
@@ -218,7 +215,7 @@ export default function Dashboard() {
                 : "bg-blue-600 text-white hover:bg-blue-500")
             }
           >
-            {loadingSeed ? "Loading..." : "Load Demo Data"}
+            {loadingSeed ? "Refreshin..." : "Refresh Accounts"}
           </button>
 
           {availableMonths?.length ? (
@@ -399,14 +396,14 @@ export default function Dashboard() {
         </div>
 
         <div className="space-y-6 lg:col-span-2">
-          <SectionShell title="KPIs (Month to Date)">
+          <SectionShell title="Your Finances at a glance">
             {kpis ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 <Card title="MTD Total Spend" value={fmtMoney(kpis.mtd_total_spend)} />
                 <Card title="MTD Net Cashflow" value={fmtMoney(kpis.mtd_net_cashflow)} />
                 <Card title="Recurring Total" value={fmtMoney(kpis.mtd_recurring_total)} subtext="Subscriptions category" />
                 <Card title="Subscriptions Count" value={fmtNumber(kpis.subscriptions_count)} />
-                <Card title="Anomalies" value={fmtNumber(kpis.anomalies_count_30d)} subtext="Last 30 days (demo rule)" />
+                <Card title="Anomalies" value={fmtNumber(kpis.anomalies_count_30d)} subtext="Recent Days" />
                 <Card
                   title="Biggest Spend Driver"
                   value={kpis.biggest_spend_driver?.category || "N/A"}
@@ -418,7 +415,7 @@ export default function Dashboard() {
             )}
           </SectionShell>
 
-          <SectionShell title="AI insights">
+          <SectionShell title="Expert insights from your Personal Finance Coach">
             <InsightCards
               month={selectedMonth}
               onDrilldown={(dd) => {
@@ -436,10 +433,8 @@ export default function Dashboard() {
               }}
             />
           </SectionShell>
-        </div>
-      </div>
 
-      <SectionShell title="Trends (from analytics engine)">
+          <SectionShell title="Your Trends">
         {charts ? (
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -586,6 +581,10 @@ export default function Dashboard() {
           <div className="text-sm text-slate-400">Load demo data to generate trends.</div>
         )}
       </SectionShell>
+        </div>
+      </div>
+
+   
     </div>
   );
 }
