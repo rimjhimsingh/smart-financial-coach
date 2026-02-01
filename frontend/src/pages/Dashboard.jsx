@@ -152,7 +152,7 @@ export default function Dashboard() {
   }, []);
 
   const statusPill = (
-    <span className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">
+    <span className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate கொள்ள text-slate-300">
       <span
         className={
           "h-2 w-2 rounded-full " + (health?.status === "online" ? "bg-emerald-400" : "bg-yellow-400")
@@ -388,20 +388,22 @@ export default function Dashboard() {
 
       <SectionShell title="Trends (from analytics engine)">
         {charts ? (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                Spend by category (latest month)
-              </div>
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Spend by category (latest month)
+                </div>
 
-              <div className="mt-3">
-                <SpendByCategoryChart
-                  data={spendByCategory}
-                  onSelectCategory={(category) => {
-                    setSelectedCategory(category);
-                    loadCategoryBreakdown(selectedMonth, category);
-                  }}
-                />
+                <div className="mt-3">
+                  <SpendByCategoryChart
+                    data={spendByCategory}
+                    onSelectCategory={(category) => {
+                      setSelectedCategory(category);
+                      loadCategoryBreakdown(selectedMonth, category);
+                    }}
+                  />
+                </div>
 
                 {selectedCategory ? (
                   <div className="mt-3 text-xs text-slate-300">
@@ -409,98 +411,118 @@ export default function Dashboard() {
                   </div>
                 ) : null}
 
-                {selectedCategory ? (
-                  <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-950/30 p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm font-bold text-slate-100">Drilldown: {selectedCategory}</div>
-                      <button
-                        onClick={() => {
-                          setSelectedCategory(null);
-                          setCategoryBreakdown(null);
-                        }}
-                        className="text-xs font-semibold text-slate-300 hover:text-white"
-                      >
-                        Clear
-                      </button>
+                <div className="mt-3 text-xs text-slate-500">Tip: click a bar to open category drilldown</div>
+              </div>
+
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
+                <div className="flex items-center justify-between">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Drilldown</div>
+                  {selectedCategory ? (
+                    <button
+                      onClick={() => {
+                        setSelectedCategory(null);
+                        setCategoryBreakdown(null);
+                      }}
+                      className="text-xs font-semibold text-slate-300 hover:text-white"
+                    >
+                      Clear
+                    </button>
+                  ) : null}
+                </div>
+
+                {!selectedCategory ? (
+                  <div className="mt-3 text-sm text-slate-400">Click a bar to see details.</div>
+                ) : loadingDrilldown ? (
+                  <div className="mt-3 text-sm text-slate-400">Loading breakdown...</div>
+                ) : !categoryBreakdown ? (
+                  <div className="mt-3 text-sm text-slate-400">No breakdown available.</div>
+                ) : (
+                  <div className="mt-4 space-y-4">
+                    <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top merchants</div>
+                      <div className="mt-2 space-y-2">
+                        {(categoryBreakdown.top_merchants || []).map((m) => (
+                          <div key={m.merchant} className="flex items-center justify-between text-xs">
+                            <span className="text-slate-200">{m.merchant}</span>
+                            <span className="font-bold text-slate-100">{fmtMoney(m.total_spend)}</span>
+                          </div>
+                        ))}
+                        {!categoryBreakdown.top_merchants?.length ? (
+                          <div className="text-xs text-slate-400">
+                            No spend found for this category in {categoryBreakdown.month}.
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
 
-                    {loadingDrilldown ? (
-                      <div className="mt-3 text-xs text-slate-400">Loading breakdown...</div>
-                    ) : !categoryBreakdown ? (
-                      <div className="mt-3 text-xs text-slate-400">
-                        Select a category to see top merchants and transactions.
+                    <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
+                      <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                        Top transactions
                       </div>
-                    ) : (
-                      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-                          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Top merchants</div>
-                          <div className="mt-2 space-y-2">
-                            {(categoryBreakdown.top_merchants || []).map((m) => (
-                              <div key={m.merchant} className="flex items-center justify-between text-xs">
-                                <span className="text-slate-200">{m.merchant}</span>
-                                <span className="font-bold text-slate-100">{fmtMoney(m.total_spend)}</span>
+                      <div className="mt-2 space-y-2">
+                        {(categoryBreakdown.top_transactions || []).map((t) => (
+                          <div key={t.transaction_id} className="flex items-start justify-between gap-3 text-xs">
+                            <div>
+                              <div className="font-semibold text-slate-200">{t.merchant}</div>
+                              <div className="text-slate-400">
+                                {t.posted_date} {t.account_id}
                               </div>
-                            ))}
-                            {!categoryBreakdown.top_merchants?.length ? (
-                              <div className="text-xs text-slate-400">
-                                No spend found for this category in {categoryBreakdown.month}.
-                              </div>
-                            ) : null}
+                            </div>
+                            <div className="font-bold text-slate-100">{fmtMoney(t.amount)}</div>
                           </div>
-                        </div>
-
-                        <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-                          <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                            Top transactions
-                          </div>
-                          <div className="mt-2 space-y-2">
-                            {(categoryBreakdown.top_transactions || []).map((t) => (
-                              <div key={t.transaction_id} className="flex items-start justify-between gap-3 text-xs">
-                                <div>
-                                  <div className="font-semibold text-slate-200">{t.merchant}</div>
-                                  <div className="text-slate-400">
-                                    {t.posted_date} {t.account_id}
-                                  </div>
-                                </div>
-                                <div className="font-bold text-slate-100">{fmtMoney(t.amount)}</div>
-                              </div>
-                            ))}
-                            {!categoryBreakdown.top_transactions?.length ? (
-                              <div className="text-xs text-slate-400">No transactions found.</div>
-                            ) : null}
-                          </div>
-                        </div>
+                        ))}
+                        {!categoryBreakdown.top_transactions?.length ? (
+                          <div className="text-xs text-slate-400">No transactions found.</div>
+                        ) : null}
                       </div>
-                    )}
+                    </div>
                   </div>
-                ) : null}
+                )}
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                Money in vs out (monthly)
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Money in vs out (monthly)
+                </div>
+
+                <div className="mt-3">
+                  <MoneyInOutChart data={inVsOut.slice(-6)} />
+                </div>
+
+                <div className="mt-3 text-xs text-slate-500">
+                  Bars show money in and money out. Line shows net cashflow.
+                </div>
               </div>
 
-              <div className="mt-3">
-                <MoneyInOutChart data={inVsOut.slice(-6)} />
-              </div>
-
-              <div className="mt-3 text-xs text-slate-500">
-                Bars show money in and money out. Line shows net cashflow.
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">What it means</div>
+                <div className="mt-3 text-sm text-slate-300">
+                  Track whether you stay cashflow positive and identify months where spending overtakes income.
+                </div>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
-              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                Daily spend trend (latest 14d)
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-2">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Daily spend trend (latest 14d)
+                </div>
+
+                <div className="mt-3">
+                  <DailySpendTrendChart data={dailyTrend.slice(-14)} height={260} />
+                </div>
+
+                <div className="mt-3 text-xs text-slate-500">Hover points to see day and spend.</div>
               </div>
 
-              <div className="mt-3">
-                <DailySpendTrendChart data={dailyTrend.slice(-14)} height={220} />
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 lg:col-span-1">
+                <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">Pattern check</div>
+                <div className="mt-3 text-sm text-slate-300">
+                  Spikes often indicate one time purchases or subscription billing days. Use drilldowns to confirm.
+                </div>
               </div>
-
-              <div className="mt-3 text-xs text-slate-500">Hover points to see day and spend.</div>
             </div>
           </div>
         ) : (

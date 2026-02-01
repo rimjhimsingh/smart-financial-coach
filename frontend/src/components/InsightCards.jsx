@@ -203,7 +203,7 @@ export default function InsightCards({ month, onDrilldown }) {
   return (
     <div className="bg-transparent p-0">
       <div className="flex items-center justify-between">
-        <div className="text-sm font-extrabold text-white">AI insights</div>
+        <div className="text-sm font-extrabold text-white"></div>
         {loading ? <div className="text-xs text-slate-500">Generating...</div> : null}
       </div>
 
