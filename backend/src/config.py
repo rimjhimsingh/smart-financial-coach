@@ -22,6 +22,6 @@ def load_config() -> dict:
     return {
         "ENV": os.getenv("ENV", "dev"),
         "GEMINI_API_KEY": os.getenv("GEMINI_API_KEY", ""),
-        "GEMINI_MODEL": os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+        "GEMINI_MODEL": os.getenv("GEMINI_MODEL", "gemma-3-27b-it"),
         "INSIGHTS_CACHE_TTL_SEC": int(os.getenv("INSIGHTS_CACHE_TTL_SEC", "21600")),
     }
